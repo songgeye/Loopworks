@@ -3165,3 +3165,262 @@ Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached
 
   [1m[36mProductionRecord Load (0.5ms)[0m  [1m[34mSELECT "production_records".* FROM "production_records" WHERE "production_records"."deleted_at" IS NULL /* loading for pp */ LIMIT ?[0m  [["LIMIT", 11]]
   [1m[36mProductionRecord Load (0.4ms)[0m  [1m[34mSELECT "production_records".* FROM "production_records" WHERE "production_records"."deleted_at" IS NULL ORDER BY "production_records"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Started GET "/" for 127.0.0.1 at 2026-09-15 19:58:59 +0900
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by DashboardController#index as HTML
+  [1m[36mStaff Load (1.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 401 Unauthorized in 31ms (ActiveRecord: 3.0ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2026-09-15 19:58:59 +0900
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (Duration: 0.8ms | GC: 0.2ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 7.7ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 122.2ms | GC: 1.1ms)
+Completed 200 OK in 166ms (Views: 162.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 16.4ms)
+
+
+Started GET "/manifest.json" for 127.0.0.1 at 2026-09-15 19:59:03 +0900
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.4ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2026-09-15 19:59:39 +0900
+Processing by Devise::SessionsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "staff"=>{"username"=>"admin", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mStaff Load (0.9ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."username" = ? ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["username", "admin"], ["LIMIT", 1]]
+Redirected to http://127.0.0.1:3000/
+Completed 303 See Other in 257ms (ActiveRecord: 0.9ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-09-15 19:59:39 +0900
+Processing by DashboardController#index as TURBO_STREAM
+  [1m[36mStaff Load (0.1ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | GC: 0.3ms)
+Completed 200 OK in 5ms (Views: 3.1ms | ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.3ms)
+
+
+  [1m[36mProductionRecord Load (0.1ms)[0m  [1m[34mSELECT "production_records".* FROM "production_records" WHERE "production_records"."deleted_at" IS NULL ORDER BY "production_records"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Started GET "/production_records" for 127.0.0.1 at 2026-09-15 20:08:01 +0900
+Processing by ProductionRecordsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering production_records/index.html.erb within layouts/application
+  [1m[36mProductionRecord Load (0.4ms)[0m  [1m[34mSELECT "production_records".* FROM "production_records" WHERE "production_records"."deleted_at" IS NULL ORDER BY "production_records"."recorded_at" DESC[0m
+  ↳ app/views/production_records/index.html.erb:17
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/production_records/index.html.erb:20
+  [1m[36mStaff Load (0.1ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/production_records/index.html.erb:22
+  Rendered production_records/index.html.erb within layouts/application (Duration: 72.3ms | GC: 19.6ms)
+  Rendered layout layouts/application.html.erb (Duration: 75.8ms | GC: 20.9ms)
+Completed 200 OK in 110ms (Views: 77.0ms | ActiveRecord: 7.7ms (3 queries, 0 cached) | GC: 21.9ms)
+
+
+Started GET "/manifest.json" for 127.0.0.1 at 2026-09-15 20:08:02 +0900
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/materials/1" for 127.0.0.1 at 2026-09-15 20:08:06 +0900
+Processing by MaterialsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mStaff Load (0.8ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/materials_controller.rb:46:in `set_material'
+  Rendering layout layouts/application.html.erb
+  Rendering materials/show.html.erb within layouts/application
+  Rendered materials/show.html.erb within layouts/application (Duration: 1.8ms | GC: 0.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.2ms | GC: 2.6ms)
+Completed 200 OK in 30ms (Views: 8.5ms | ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 13.1ms)
+
+
+Started GET "/materials/1/edit" for 127.0.0.1 at 2026-09-15 20:08:10 +0900
+Processing by MaterialsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mStaff Load (0.1ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/materials_controller.rb:46:in `set_material'
+  Rendering layout layouts/application.html.erb
+  Rendering materials/edit.html.erb within layouts/application
+  Rendered materials/edit.html.erb within layouts/application (Duration: 2.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.0ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 3.2ms | ActiveRecord: 0.2ms (2 queries, 0 cached) | GC: 2.0ms)
+
+
+Started GET "/materials/1" for 127.0.0.1 at 2026-09-15 20:08:10 +0900
+Processing by MaterialsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mStaff Load (0.1ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.0ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/materials_controller.rb:46:in `set_material'
+  Rendering layout layouts/application.html.erb
+  Rendering materials/show.html.erb within layouts/application
+  Rendered materials/show.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.9ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 1.1ms | ActiveRecord: 0.1ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/materials/1" for 127.0.0.1 at 2026-09-15 20:08:11 +0900
+Processing by MaterialsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mStaff Load (0.1ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/materials_controller.rb:46:in `set_material'
+  Rendering layout layouts/application.html.erb
+  Rendering materials/show.html.erb within layouts/application
+  Rendered materials/show.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.0ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 1.2ms | ActiveRecord: 0.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/materials" for 127.0.0.1 at 2026-09-15 20:08:14 +0900
+Processing by MaterialsController#index as HTML
+  [1m[36mStaff Load (0.1ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering materials/index.html.erb within layouts/application
+  [1m[36mMaterial Load (0.3ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL[0m
+  ↳ app/views/materials/index.html.erb:14
+  Rendered materials/index.html.erb within layouts/application (Duration: 3.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.8ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 4.8ms | ActiveRecord: 0.4ms (2 queries, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/materials/new" for 127.0.0.1 at 2026-09-15 20:08:18 +0900
+Processing by MaterialsController#new as HTML
+  [1m[36mStaff Load (0.1ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering materials/new.html.erb within layouts/application
+  Rendered materials/new.html.erb within layouts/application (Duration: 1.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.0ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 2.2ms | ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/signup" for 127.0.0.1 at 2026-09-15 20:25:58 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/signup"):
+  
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-09-15 20:26:00 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateOutbounds (20260915114409)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "outbounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "staff_id" integer NOT NULL, "counterparty_id" integer NOT NULL, "counterparty_pic_name" varchar, "recorded_at" datetime(6) NOT NULL, "slip_no" varchar, "billing_no" varchar, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_3e9c6a2216"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+, CONSTRAINT "fk_rails_5b01187011"
+FOREIGN KEY ("counterparty_id")
+  REFERENCES "counterparties" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_outbounds_on_staff_id" ON "outbounds" ("staff_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_outbounds_on_counterparty_id" ON "outbounds" ("counterparty_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_outbounds_on_billing_no" ON "outbounds" ("billing_no")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_outbounds_on_deleted_at" ON "outbounds" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260915114409') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateInbounds (20260915114720)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (10.2ms)[0m  [1m[35mCREATE TABLE "inbounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "staff_id" integer NOT NULL, "counterparty_id" integer NOT NULL, "counterparty_pic_name" varchar, "recorded_at" datetime(6) NOT NULL, "slip_no" varchar, "billing_no" varchar, "picked_up" boolean NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_18af2dc634"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+, CONSTRAINT "fk_rails_be870e5769"
+FOREIGN KEY ("counterparty_id")
+  REFERENCES "counterparties" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_on_staff_id" ON "inbounds" ("staff_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_on_counterparty_id" ON "inbounds" ("counterparty_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_inbounds_on_billing_no" ON "inbounds" ("billing_no")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_on_deleted_at" ON "inbounds" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260915114720') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateOutboundsMaterials (20260915114938)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "outbounds_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "outbound_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "declared_kg" decimal(10,2), "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_de93b9ff75"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+, CONSTRAINT "fk_rails_03c41f875e"
+FOREIGN KEY ("outbound_id")
+  REFERENCES "outbounds" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_outbounds_materials_on_material_id" ON "outbounds_materials" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_outbounds_materials_on_outbound_id" ON "outbounds_materials" ("outbound_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_outbounds_materials_on_deleted_at" ON "outbounds_materials" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260915114938') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateInboundsMaterials (20260915115033)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "inbounds_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "inbound_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "declared_kg" decimal(10,2), "flagged_as_anomaly" boolean NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_482971a782"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+, CONSTRAINT "fk_rails_f0bc507136"
+FOREIGN KEY ("inbound_id")
+  REFERENCES "inbounds" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_material_id" ON "inbounds_materials" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_inbound_id" ON "inbounds_materials" ("inbound_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_deleted_at" ON "inbounds_materials" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260915115033') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to ChangeMaterials (20260923170844)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amaterials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "display_order" integer NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_amaterials_on_deleted_at" ON "amaterials" ("deleted_at")[0m
+  [1m[35m (0.4ms)[0m  [1m[32mINSERT INTO "amaterials" ("id","name","display_order","deleted_at","created_at","updated_at")
+                     SELECT "id","name","display_order","deleted_at","created_at","updated_at" FROM "materials"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "materials"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "display_order" integer NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "stock_target" boolean NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_materials_on_deleted_at" ON "materials" ("deleted_at")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "materials" ("id","name","display_order","deleted_at","created_at","updated_at")
+                     SELECT "id","name","display_order","deleted_at","created_at","updated_at" FROM "amaterials"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ChangeMaterials (20260923170844)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "materials" ADD "stock_target" boolean DEFAULT 1 NOT NULL[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260923170844') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateCounterparties (20260923172133)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "counterparties" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "party_type" integer NOT NULL, "name" varchar NOT NULL, "address" text, "date_of_birth" date, "id_type" integer, "id_confirmed_at" datetime(6), "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_counterparties_on_deleted_at" ON "counterparties" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260923172133') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateInventoryMovements (20260923183727)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (8.8ms)[0m  [1m[35mCREATE TABLE "inventory_movements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2), "recorded_at" datetime(6) NOT NULL, "source_type" varchar, "source_id" integer, "movement_type" integer NOT NULL, "note" text, "staff_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_823004e367"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+, CONSTRAINT "fk_rails_ccbff41383"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_material_id" ON "inventory_movements" ("material_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_source" ON "inventory_movements" ("source_type", "source_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_staff_id" ON "inventory_movements" ("staff_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_recorded_at" ON "inventory_movements" ("recorded_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260923183727') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to DropProductionRecords (20260923185413)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mDROP TABLE "production_records"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260923185413') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m

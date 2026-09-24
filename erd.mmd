@@ -1,0 +1,70 @@
+erDiagram
+	direction TB
+	Counterparty {
+		text address
+		date date_of_birth
+		datetime deleted_at
+		datetime id_confirmed_at
+		integer id_type
+		string name
+		integer party_type
+	}
+	Inbound {
+		string billing_no
+		string counterparty_pic_name
+		datetime deleted_at
+		boolean picked_up
+		datetime recorded_at
+		string slip_no
+	}
+	InboundsMaterial {
+		decimal declared_kg
+		datetime deleted_at
+		boolean flagged_as_anomaly
+		decimal quantity_kg
+	}
+	InventoryMovement {
+		integer movement_type
+		text note
+		decimal quantity_kg
+		datetime recorded_at
+		string source_type
+	}
+	Material {
+		datetime deleted_at
+		integer display_order
+		string name
+		boolean stock_target
+	}
+	Outbound {
+		string billing_no
+		string counterparty_pic_name
+		datetime deleted_at
+		datetime recorded_at
+		string slip_no
+	}
+	OutboundsMaterial {
+		decimal declared_kg
+		datetime deleted_at
+		decimal quantity_kg
+	}
+	Staff {
+		datetime deleted_at
+		string encrypted_password
+		string name
+		datetime remember_created_at
+		string role
+		string username
+	}
+	Counterparty ||--}o Inbound : ""
+	Counterparty ||--}o Outbound : ""
+	Staff ||--}o Inbound : ""
+	Material ||--}o InboundsMaterial : ""
+	Inbound ||--}o InboundsMaterial : ""
+	InboundsMaterial o|--|o InventoryMovement : ""
+	OutboundsMaterial o|--|o InventoryMovement : ""
+	Material ||--}o InventoryMovement : ""
+	Staff ||--}o InventoryMovement : ""
+	Staff ||--}o Outbound : ""
+	Outbound ||--}o OutboundsMaterial : ""
+	Material ||--}o OutboundsMaterial : ""
