@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_09_27_155536) do
+ActiveRecord::Schema[7.2].define(version: 2026_09_27_181640) do
   create_table "adjustment_materials", force: :cascade do |t|
     t.integer "material_id", null: false
     t.decimal "quantity_kg", precision: 10, scale: 2, null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_27_155536) do
     t.integer "inbound_id", null: false
     t.decimal "quantity_kg", precision: 10, scale: 2, null: false
     t.decimal "declared_kg", precision: 10, scale: 2
-    t.boolean "flagged_as_anomaly", null: false
+    t.boolean "flagged_as_anomaly", default: false, null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

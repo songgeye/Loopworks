@@ -3596,3 +3596,89 @@ Migrating to RenameMaterialMovementsSourceIndex (20260927155536)
   [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260927155536') RETURNING "version"[0m
   [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mCounterparty Load (0.3ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" ORDER BY "counterparties"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mStaff Load (0.3ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mStaff Load (1.9ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."role" = ? LIMIT ?[0m  [["role", "staff"], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.3ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."role" = ? LIMIT ?[0m  [["role", "admin"], ["LIMIT", 1]]
+  [1m[36mCounterparty Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "counterparties"[0m
+  [1m[36mStaff Count (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "staffs"[0m
+  [1m[36mMaterial Count (1.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "materials" WHERE "materials"."deleted_at" IS NULL[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCounterparty Create (3.4ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", nil], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:07:13.546975"], ["updated_at", "2026-09-28 03:07:13.546975"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+DEPRECATION WARNING: Defining enums with keyword arguments is deprecated and will be removed
+in Rails 8.0. Positional arguments should be used instead:
+
+enum :party_type, {:corporate=>0, :individual=>1}
+ (called from <class:Counterparty> at /Users/matsuganokengo/Loopworks/app/models/counterparty.rb:5)
+DEPRECATION WARNING: Defining enums with keyword arguments is deprecated and will be removed
+in Rails 8.0. Positional arguments should be used instead:
+
+enum :id_type, {:drivers_license=>0, :my_number_card=>1, :health_insurance=>2, :passport=>3, :residence_card=>4, :other=>5}
+ (called from <class:Counterparty> at /Users/matsuganokengo/Loopworks/app/models/counterparty.rb:7)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCounterparty Create (3.6ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:10:04.413690"], ["updated_at", "2026-09-28 03:10:04.413690"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCounterparty Create (1.7ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先2"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:15:08.663349"], ["updated_at", "2026-09-28 03:15:08.663349"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCounterparty Load (2.1ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" ORDER BY "counterparties"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mStaff Load (1.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInbound Create (0.8ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "picked_up", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-09-27 03:15:23.787895"], ["slip_no", nil], ["billing_no", nil], ["picked_up", 0], ["deleted_at", nil], ["created_at", "2026-09-28 03:15:23.792811"], ["updated_at", "2026-09-28 03:15:23.792811"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInboundsMaterial Create (0.7ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:15:23.811976"], ["updated_at", "2026-09-28 03:15:23.811976"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ChangeInboundsMaterialsDefault (20260927181640)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ainbounds_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "inbound_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "declared_kg" decimal(10,2), "flagged_as_anomaly" boolean NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_materials_on_deleted_at" ON "ainbounds_materials" ("deleted_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_materials_on_inbound_id" ON "ainbounds_materials" ("inbound_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_materials_on_material_id" ON "ainbounds_materials" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "ainbounds_materials" ("id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at")
+                     SELECT "id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at" FROM "inbounds_materials"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "inbounds_materials"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "inbounds_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "inbound_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "declared_kg" decimal(10,2), "flagged_as_anomaly" boolean DEFAULT 0 NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_f0bc507136"
+FOREIGN KEY ("inbound_id")
+  REFERENCES "inbounds" ("id")
+, CONSTRAINT "fk_rails_482971a782"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_material_id" ON "inbounds_materials" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_inbound_id" ON "inbounds_materials" ("inbound_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_deleted_at" ON "inbounds_materials" ("deleted_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at")
+                     SELECT "id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at" FROM "ainbounds_materials"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ainbounds_materials"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260927181640') RETURNING "version"[0m
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInbound Create (3.2ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "picked_up", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-09-27 03:17:44.417951"], ["slip_no", nil], ["billing_no", nil], ["picked_up", 0], ["deleted_at", nil], ["created_at", "2026-09-28 03:17:44.430265"], ["updated_at", "2026-09-28 03:17:44.430265"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMaterial Load (0.7ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInboundsMaterial Create (6.7ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 2], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:18:01.210780"], ["updated_at", "2026-09-28 03:18:01.210780"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mInbound Load (0.8ms)[0m  [1m[34mSELECT "inbounds".* FROM "inbounds" ORDER BY "inbounds"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInboundsMaterial Create (0.6ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:20:37.474330"], ["updated_at", "2026-09-28 03:20:37.474330"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mInbound Load (0.3ms)[0m  [1m[34mSELECT "inbounds".* FROM "inbounds" ORDER BY "inbounds"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mMaterial Load (0.5ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInboundsMaterial Create (0.7ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-09-28 03:21:35.353742"], ["updated_at", "2026-09-28 03:21:35.353742"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
