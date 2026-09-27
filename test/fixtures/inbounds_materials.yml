@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  material: one
+  inbound: one
+  quantity_kg: 9.99
+  flagged_as_anomaly: false
+
+two:
+  material: two
+  inbound: two
+  quantity_kg: 9.99
+  flagged_as_anomaly: false

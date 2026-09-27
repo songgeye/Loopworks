@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  material: one
+  quantity_kg: 9.99
+  recorded_at: 2026-09-27 21:33:57
+  note: MyText
+  staff: one
+
+two:
+  material: two
+  quantity_kg: 9.99
+  recorded_at: 2026-09-27 21:33:57
+  note: MyText
+  staff: two

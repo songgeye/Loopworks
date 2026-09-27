@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  staff: one
+  client_pic_name: MyString
+  received_at: 2026-09-15 20:47:20
+  slip_no: MyString
+  declared_total_kg: 1
+
+two:
+  staff: two
+  client_pic_name: MyString
+  received_at: 2026-09-15 20:47:20
+  slip_no: MyString
+  declared_total_kg: 1
