@@ -4,6 +4,8 @@ class Staff < ApplicationRecord
   devise :database_authenticatable, :rememberable
   has_many :inbounds
   has_many :outbounds
+  has_many :adjustment_materials
+  has_many :material_movements
 
   validates :username, presence: true, uniqueness: true
   validates :name, presence: true

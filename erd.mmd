@@ -1,5 +1,11 @@
 erDiagram
 	direction TB
+	AdjustmentMaterial {
+		datetime deleted_at
+		text note
+		decimal quantity_kg
+		datetime recorded_at
+	}
 	Counterparty {
 		text address
 		date date_of_birth
@@ -23,18 +29,17 @@ erDiagram
 		boolean flagged_as_anomaly
 		decimal quantity_kg
 	}
-	InventoryMovement {
-		integer movement_type
-		text note
-		decimal quantity_kg
-		datetime recorded_at
-		string source_type
-	}
 	Material {
 		datetime deleted_at
 		integer display_order
 		string name
 		boolean stock_target
+	}
+	MaterialMovement {
+		text note
+		decimal quantity_kg
+		datetime recorded_at
+		string source_type
 	}
 	Outbound {
 		string billing_no
@@ -56,15 +61,18 @@ erDiagram
 		string role
 		string username
 	}
+	Material ||--}o AdjustmentMaterial : ""
+	Staff ||--}o AdjustmentMaterial : ""
+	AdjustmentMaterial ||--|o MaterialMovement : ""
+	InboundsMaterial ||--|o MaterialMovement : ""
+	OutboundsMaterial ||--|o MaterialMovement : ""
 	Counterparty ||--}o Inbound : ""
 	Counterparty ||--}o Outbound : ""
 	Staff ||--}o Inbound : ""
 	Material ||--}o InboundsMaterial : ""
 	Inbound ||--}o InboundsMaterial : ""
-	InboundsMaterial o|--|o InventoryMovement : ""
-	OutboundsMaterial o|--|o InventoryMovement : ""
-	Material ||--}o InventoryMovement : ""
-	Staff ||--}o InventoryMovement : ""
+	Material ||--}o MaterialMovement : ""
+	Staff ||--}o MaterialMovement : ""
 	Staff ||--}o Outbound : ""
 	Outbound ||--}o OutboundsMaterial : ""
 	Material ||--}o OutboundsMaterial : ""
