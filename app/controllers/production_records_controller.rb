@@ -1,3 +1,4 @@
+# 旧設計の参考用。InboundsMaterialsController に移したら削除する
 class ProductionRecordsController < ApplicationController
   skip_before_action :authenticate_staff!
   before_action :set_production_record, only: [:show, :edit, :update, :destroy]

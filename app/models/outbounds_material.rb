@@ -8,7 +8,7 @@ class OutboundsMaterial < ApplicationRecord
   end
 
   def editable_by?(user)
-    return true if user.admin?
+    return true if user&.admin?
     business_date == BusinessDay.current
   end
 end
