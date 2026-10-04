@@ -15,6 +15,9 @@ erDiagram
 		string name
 		integer party_type
 	}
+	CurrentMaterial {
+		decimal quantity_kg
+	}
 	Inbound {
 		string billing_no
 		string counterparty_pic_name
@@ -67,11 +70,12 @@ erDiagram
 	OutboundsMaterial ||--|o MaterialMovement : ""
 	Counterparty ||--}o Inbound : ""
 	Counterparty ||--}o Outbound : ""
+	Material ||--|o CurrentMaterial : ""
 	Staff ||--}o Inbound : ""
-	Material ||--}o InboundsMaterial : ""
 	Inbound ||--}o InboundsMaterial : ""
+	Material ||--}o InboundsMaterial : ""
+	Material ||--}o OutboundsMaterial : ""
 	Material ||--}o MaterialMovement : ""
 	Staff ||--}o MaterialMovement : ""
 	Staff ||--}o Outbound : ""
 	Outbound ||--}o OutboundsMaterial : ""
-	Material ||--}o OutboundsMaterial : ""

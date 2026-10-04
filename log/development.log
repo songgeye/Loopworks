@@ -4143,3 +4143,15 @@ FOREIGN KEY ("staff_id")
   [1m[36mInboundsMaterial Create (0.8ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 3], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-01 21:01:03.999369"], ["updated_at", "2026-10-01 21:01:03.999369"]]
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
   [1m[36mStaff Load (3.1ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."role" = ? LIMIT ?[0m  [["role", "admin"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateCurrentMaterials (20261004134549)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "current_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2) DEFAULT 0.0 NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_fe033f2290"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_current_materials_on_material_id" ON "current_materials" ("material_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20261004134549') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m

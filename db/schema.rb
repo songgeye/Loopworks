@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_09_28_155402) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_04_134549) do
   create_table "adjustment_materials", force: :cascade do |t|
     t.integer "material_id", null: false
     t.decimal "quantity_kg", precision: 10, scale: 2, null: false
@@ -37,6 +37,14 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_28_155402) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_counterparties_on_deleted_at"
+  end
+
+  create_table "current_materials", force: :cascade do |t|
+    t.integer "material_id", null: false
+    t.decimal "quantity_kg", precision: 10, scale: 2, default: "0.0", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["material_id"], name: "index_current_materials_on_material_id", unique: true
   end
 
   create_table "inbounds", force: :cascade do |t|
@@ -139,6 +147,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_28_155402) do
 
   add_foreign_key "adjustment_materials", "materials"
   add_foreign_key "adjustment_materials", "staffs"
+  add_foreign_key "current_materials", "materials"
   add_foreign_key "inbounds", "counterparties"
   add_foreign_key "inbounds", "staffs"
   add_foreign_key "inbounds_materials", "inbounds"
