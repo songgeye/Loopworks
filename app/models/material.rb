@@ -1,6 +1,6 @@
 class Material < ApplicationRecord
-  has_many :inbound_materials
-  has_many :outbound_materials
+  has_many :inbounds_materials
+  has_many :outbounds_materials
   has_many :adjustment_materials
   has_many :material_movements
   acts_as_paranoid

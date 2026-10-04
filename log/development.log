@@ -3596,3 +3596,550 @@ Migrating to RenameMaterialMovementsSourceIndex (20260927155536)
   [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260927155536') RETURNING "version"[0m
   [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mCounterparty Load (0.3ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" ORDER BY "counterparties"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mStaff Load (0.3ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mStaff Load (1.9ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."role" = ? LIMIT ?[0m  [["role", "staff"], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.3ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."role" = ? LIMIT ?[0m  [["role", "admin"], ["LIMIT", 1]]
+  [1m[36mCounterparty Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "counterparties"[0m
+  [1m[36mStaff Count (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "staffs"[0m
+  [1m[36mMaterial Count (1.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "materials" WHERE "materials"."deleted_at" IS NULL[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCounterparty Create (3.4ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", nil], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:07:13.546975"], ["updated_at", "2026-09-28 03:07:13.546975"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+DEPRECATION WARNING: Defining enums with keyword arguments is deprecated and will be removed
+in Rails 8.0. Positional arguments should be used instead:
+
+enum :party_type, {:corporate=>0, :individual=>1}
+ (called from <class:Counterparty> at /Users/matsuganokengo/Loopworks/app/models/counterparty.rb:5)
+DEPRECATION WARNING: Defining enums with keyword arguments is deprecated and will be removed
+in Rails 8.0. Positional arguments should be used instead:
+
+enum :id_type, {:drivers_license=>0, :my_number_card=>1, :health_insurance=>2, :passport=>3, :residence_card=>4, :other=>5}
+ (called from <class:Counterparty> at /Users/matsuganokengo/Loopworks/app/models/counterparty.rb:7)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCounterparty Create (3.6ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:10:04.413690"], ["updated_at", "2026-09-28 03:10:04.413690"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCounterparty Create (1.7ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先2"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:15:08.663349"], ["updated_at", "2026-09-28 03:15:08.663349"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCounterparty Load (2.1ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" ORDER BY "counterparties"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mStaff Load (1.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInbound Create (0.8ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "picked_up", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-09-27 03:15:23.787895"], ["slip_no", nil], ["billing_no", nil], ["picked_up", 0], ["deleted_at", nil], ["created_at", "2026-09-28 03:15:23.792811"], ["updated_at", "2026-09-28 03:15:23.792811"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInboundsMaterial Create (0.7ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:15:23.811976"], ["updated_at", "2026-09-28 03:15:23.811976"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ChangeInboundsMaterialsDefault (20260927181640)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ainbounds_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "inbound_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "declared_kg" decimal(10,2), "flagged_as_anomaly" boolean NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_materials_on_deleted_at" ON "ainbounds_materials" ("deleted_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_materials_on_inbound_id" ON "ainbounds_materials" ("inbound_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_materials_on_material_id" ON "ainbounds_materials" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "ainbounds_materials" ("id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at")
+                     SELECT "id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at" FROM "inbounds_materials"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "inbounds_materials"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "inbounds_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "inbound_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "declared_kg" decimal(10,2), "flagged_as_anomaly" boolean DEFAULT 0 NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_f0bc507136"
+FOREIGN KEY ("inbound_id")
+  REFERENCES "inbounds" ("id")
+, CONSTRAINT "fk_rails_482971a782"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_material_id" ON "inbounds_materials" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_inbound_id" ON "inbounds_materials" ("inbound_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_deleted_at" ON "inbounds_materials" ("deleted_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at")
+                     SELECT "id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at" FROM "ainbounds_materials"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ainbounds_materials"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260927181640') RETURNING "version"[0m
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInbound Create (3.2ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "picked_up", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-09-27 03:17:44.417951"], ["slip_no", nil], ["billing_no", nil], ["picked_up", 0], ["deleted_at", nil], ["created_at", "2026-09-28 03:17:44.430265"], ["updated_at", "2026-09-28 03:17:44.430265"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMaterial Load (0.7ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInboundsMaterial Create (6.7ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 2], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:18:01.210780"], ["updated_at", "2026-09-28 03:18:01.210780"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mInbound Load (0.8ms)[0m  [1m[34mSELECT "inbounds".* FROM "inbounds" ORDER BY "inbounds"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInboundsMaterial Create (0.6ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", nil], ["deleted_at", nil], ["created_at", "2026-09-28 03:20:37.474330"], ["updated_at", "2026-09-28 03:20:37.474330"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mInbound Load (0.3ms)[0m  [1m[34mSELECT "inbounds".* FROM "inbounds" ORDER BY "inbounds"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mMaterial Load (0.5ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInboundsMaterial Create (0.7ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-09-28 03:21:35.353742"], ["updated_at", "2026-09-28 03:21:35.353742"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to RemovePickedUpFromInbounds (20260928155402)
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2026-09-29 00:59:38.827576', '2026-09-29 00:59:38.827576') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateStaffs (20260712161743)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "staffs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "login_id" varchar NOT NULL, "name" varchar NOT NULL, "role" varchar NOT NULL, "password_digest" varchar NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_staffs_on_login_id" ON "staffs" ("login_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_staffs_on_deleted_at" ON "staffs" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260712161743') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateMaterials (20260712161813)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "display_order" integer NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_materials_on_deleted_at" ON "materials" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260712161813') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateProductionRecords (20260712161904)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "production_records" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "recorded_at" datetime(6) NOT NULL, "material_id" integer NOT NULL, "weight_kg" decimal NOT NULL, "staff_id" integer NOT NULL, "status" varchar DEFAULT 'published' NOT NULL, "note" text, "flagged_as_anomaly" boolean DEFAULT 0 NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_a42b1fef3b"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+, CONSTRAINT "fk_rails_632028b8d1"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_production_records_on_material_id" ON "production_records" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_production_records_on_staff_id" ON "production_records" ("staff_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_production_records_on_recorded_at" ON "production_records" ("recorded_at")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_production_records_on_status" ON "production_records" ("status")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_production_records_on_deleted_at" ON "production_records" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260712161904') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddDeviseToStaffs (20260722165308)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "staffs" ADD "encrypted_password" varchar DEFAULT '' NOT NULL[0m
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "staffs" ADD "remember_created_at" datetime(6)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260722165308') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CleanupStaffsTable (20260726085356)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astaffs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "login_id" varchar NOT NULL, "name" varchar NOT NULL, "role" varchar NOT NULL, "password_digest" varchar NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "remember_created_at" datetime(6))[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_astaffs_on_deleted_at" ON "astaffs" ("deleted_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_astaffs_on_login_id" ON "astaffs" ("login_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "astaffs" ("id","login_id","name","role","password_digest","deleted_at","created_at","updated_at","encrypted_password","remember_created_at")
+                     SELECT "id","login_id","name","role","password_digest","deleted_at","created_at","updated_at","encrypted_password","remember_created_at" FROM "staffs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "staffs"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "staffs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "login_id" varchar NOT NULL, "name" varchar NOT NULL, "role" varchar NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "remember_created_at" datetime(6))[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_staffs_on_login_id" ON "staffs" ("login_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_staffs_on_deleted_at" ON "staffs" ("deleted_at")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("id","login_id","name","role","deleted_at","created_at","updated_at","encrypted_password","remember_created_at")
+                     SELECT "id","login_id","name","role","deleted_at","created_at","updated_at","encrypted_password","remember_created_at" FROM "astaffs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "astaffs"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astaffs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "username" varchar NOT NULL, "name" varchar NOT NULL, "role" varchar NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "remember_created_at" datetime(6))[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astaffs_on_deleted_at" ON "astaffs" ("deleted_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_astaffs_on_login_id" ON "astaffs" ("username")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "astaffs" ("id","username","name","role","deleted_at","created_at","updated_at","encrypted_password","remember_created_at")
+                     SELECT "id","login_id","name","role","deleted_at","created_at","updated_at","encrypted_password","remember_created_at" FROM "staffs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "staffs"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "staffs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "username" varchar NOT NULL, "name" varchar NOT NULL, "role" varchar NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "remember_created_at" datetime(6))[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_staffs_on_login_id" ON "staffs" ("username")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_staffs_on_deleted_at" ON "staffs" ("deleted_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "staffs" ("id","username","name","role","deleted_at","created_at","updated_at","encrypted_password","remember_created_at")
+                     SELECT "id","username","name","role","deleted_at","created_at","updated_at","encrypted_password","remember_created_at" FROM "astaffs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "astaffs"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_staffs_on_username" ON "staffs" ("username")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mDROP INDEX "index_staffs_on_login_id"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260726085356') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateOutbounds (20260915114409)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "outbounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "staff_id" integer NOT NULL, "counterparty_id" integer NOT NULL, "counterparty_pic_name" varchar, "recorded_at" datetime(6) NOT NULL, "slip_no" varchar, "billing_no" varchar, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_3e9c6a2216"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+, CONSTRAINT "fk_rails_5b01187011"
+FOREIGN KEY ("counterparty_id")
+  REFERENCES "counterparties" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_outbounds_on_staff_id" ON "outbounds" ("staff_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_outbounds_on_counterparty_id" ON "outbounds" ("counterparty_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_outbounds_on_billing_no" ON "outbounds" ("billing_no")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_outbounds_on_deleted_at" ON "outbounds" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260915114409') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateInbounds (20260915114720)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "inbounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "staff_id" integer NOT NULL, "counterparty_id" integer NOT NULL, "counterparty_pic_name" varchar, "recorded_at" datetime(6) NOT NULL, "slip_no" varchar, "billing_no" varchar, "picked_up" boolean NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_18af2dc634"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+, CONSTRAINT "fk_rails_be870e5769"
+FOREIGN KEY ("counterparty_id")
+  REFERENCES "counterparties" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_on_staff_id" ON "inbounds" ("staff_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_on_counterparty_id" ON "inbounds" ("counterparty_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_inbounds_on_billing_no" ON "inbounds" ("billing_no")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_on_deleted_at" ON "inbounds" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260915114720') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateOutboundsMaterials (20260915114938)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "outbounds_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "outbound_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "declared_kg" decimal(10,2), "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_de93b9ff75"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+, CONSTRAINT "fk_rails_03c41f875e"
+FOREIGN KEY ("outbound_id")
+  REFERENCES "outbounds" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_outbounds_materials_on_material_id" ON "outbounds_materials" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_outbounds_materials_on_outbound_id" ON "outbounds_materials" ("outbound_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_outbounds_materials_on_deleted_at" ON "outbounds_materials" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260915114938') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateInboundsMaterials (20260915115033)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "inbounds_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "inbound_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "declared_kg" decimal(10,2), "flagged_as_anomaly" boolean NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_482971a782"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+, CONSTRAINT "fk_rails_f0bc507136"
+FOREIGN KEY ("inbound_id")
+  REFERENCES "inbounds" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_material_id" ON "inbounds_materials" ("material_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_inbound_id" ON "inbounds_materials" ("inbound_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_deleted_at" ON "inbounds_materials" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260915115033') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to ChangeMaterials (20260923170844)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "materials" ADD "stock_target" boolean DEFAULT 1 NOT NULL[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260923170844') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateCounterparties (20260923172133)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "counterparties" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "party_type" integer NOT NULL, "name" varchar NOT NULL, "address" text, "date_of_birth" date, "id_type" integer, "id_confirmed_at" datetime(6), "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_counterparties_on_deleted_at" ON "counterparties" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260923172133') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateInventoryMovements (20260923183727)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "inventory_movements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2), "recorded_at" datetime(6) NOT NULL, "source_type" varchar, "source_id" integer, "movement_type" integer NOT NULL, "note" text, "staff_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_823004e367"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+, CONSTRAINT "fk_rails_ccbff41383"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_material_id" ON "inventory_movements" ("material_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_source" ON "inventory_movements" ("source_type", "source_id")[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_staff_id" ON "inventory_movements" ("staff_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_recorded_at" ON "inventory_movements" ("recorded_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260923183727') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to DropProductionRecords (20260923185413)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE "production_records"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260923185413') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAdjustMaterials (20260927123357)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "adjust_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "recorded_at" datetime(6) NOT NULL, "note" text NOT NULL, "staff_id" integer NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_87569dd06a"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+, CONSTRAINT "fk_rails_f9405dacaf"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_adjust_materials_on_material_id" ON "adjust_materials" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_adjust_materials_on_staff_id" ON "adjust_materials" ("staff_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_adjust_materials_on_recorded_at" ON "adjust_materials" ("recorded_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_adjust_materials_on_deleted_at" ON "adjust_materials" ("deleted_at")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260927123357') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to ChangeInventoryMovements (20260927124555)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ainventory_movements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2), "recorded_at" datetime(6) NOT NULL, "source_type" varchar, "source_id" integer, "movement_type" integer NOT NULL, "note" text, "staff_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_recorded_at" ON "ainventory_movements" ("recorded_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_staff_id" ON "ainventory_movements" ("staff_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_source" ON "ainventory_movements" ("source_type", "source_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_material_id" ON "ainventory_movements" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "ainventory_movements" ("id","material_id","quantity_kg","recorded_at","source_type","source_id","movement_type","note","staff_id","created_at","updated_at")
+                     SELECT "id","material_id","quantity_kg","recorded_at","source_type","source_id","movement_type","note","staff_id","created_at","updated_at" FROM "inventory_movements"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mDROP TABLE "inventory_movements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "inventory_movements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2), "recorded_at" datetime(6) NOT NULL, "source_type" varchar, "source_id" integer, "note" text, "staff_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_ccbff41383"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+, CONSTRAINT "fk_rails_823004e367"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_material_id" ON "inventory_movements" ("material_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_source" ON "inventory_movements" ("source_type", "source_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_staff_id" ON "inventory_movements" ("staff_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_recorded_at" ON "inventory_movements" ("recorded_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "inventory_movements" ("id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at")
+                     SELECT "id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at" FROM "ainventory_movements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ainventory_movements"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ainventory_movements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2), "recorded_at" datetime(6) NOT NULL, "source_type" varchar, "source_id" integer, "note" text, "staff_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_recorded_at" ON "ainventory_movements" ("recorded_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_staff_id" ON "ainventory_movements" ("staff_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_source" ON "ainventory_movements" ("source_type", "source_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_material_id" ON "ainventory_movements" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "ainventory_movements" ("id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at")
+                     SELECT "id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at" FROM "inventory_movements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "inventory_movements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "inventory_movements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2), "recorded_at" datetime(6) NOT NULL, "source_type" varchar NOT NULL, "source_id" integer, "note" text, "staff_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_823004e367"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+, CONSTRAINT "fk_rails_ccbff41383"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_material_id" ON "inventory_movements" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_source" ON "inventory_movements" ("source_type", "source_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_staff_id" ON "inventory_movements" ("staff_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_recorded_at" ON "inventory_movements" ("recorded_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "inventory_movements" ("id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at")
+                     SELECT "id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at" FROM "ainventory_movements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ainventory_movements"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ainventory_movements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2), "recorded_at" datetime(6) NOT NULL, "source_type" varchar NOT NULL, "source_id" integer, "note" text, "staff_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_recorded_at" ON "ainventory_movements" ("recorded_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_staff_id" ON "ainventory_movements" ("staff_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_source" ON "ainventory_movements" ("source_type", "source_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_material_id" ON "ainventory_movements" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "ainventory_movements" ("id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at")
+                     SELECT "id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at" FROM "inventory_movements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "inventory_movements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "inventory_movements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2), "recorded_at" datetime(6) NOT NULL, "source_type" varchar NOT NULL, "source_id" integer NOT NULL, "note" text, "staff_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_ccbff41383"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+, CONSTRAINT "fk_rails_823004e367"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_material_id" ON "inventory_movements" ("material_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_source" ON "inventory_movements" ("source_type", "source_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_staff_id" ON "inventory_movements" ("staff_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_recorded_at" ON "inventory_movements" ("recorded_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "inventory_movements" ("id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at")
+                     SELECT "id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at" FROM "ainventory_movements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ainventory_movements"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ainventory_movements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2), "recorded_at" datetime(6) NOT NULL, "source_type" varchar NOT NULL, "source_id" integer NOT NULL, "note" text, "staff_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_recorded_at" ON "ainventory_movements" ("recorded_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_staff_id" ON "ainventory_movements" ("staff_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_source" ON "ainventory_movements" ("source_type", "source_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_ainventory_movements_on_material_id" ON "ainventory_movements" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "ainventory_movements" ("id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at")
+                     SELECT "id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at" FROM "inventory_movements"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "inventory_movements"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "inventory_movements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "recorded_at" datetime(6) NOT NULL, "source_type" varchar NOT NULL, "source_id" integer NOT NULL, "note" text, "staff_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_823004e367"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+, CONSTRAINT "fk_rails_ccbff41383"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_material_id" ON "inventory_movements" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_source" ON "inventory_movements" ("source_type", "source_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_staff_id" ON "inventory_movements" ("staff_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inventory_movements_on_recorded_at" ON "inventory_movements" ("recorded_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "inventory_movements" ("id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at")
+                     SELECT "id","material_id","quantity_kg","recorded_at","source_type","source_id","note","staff_id","created_at","updated_at" FROM "ainventory_movements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ainventory_movements"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260927124555') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to RenameInventoryMovementsToMaterialMovements (20260927154913)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[35mALTER TABLE "inventory_movements" RENAME TO "material_movements"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_material_movements_on_recorded_at" ON "material_movements" ("recorded_at")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mDROP INDEX "index_inventory_movements_on_recorded_at"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_material_movements_on_staff_id" ON "material_movements" ("staff_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mDROP INDEX "index_inventory_movements_on_staff_id"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_material_movements_on_material_id" ON "material_movements" ("material_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mDROP INDEX "index_inventory_movements_on_material_id"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260927154913') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to RenameAdjustMaterialsToAdjustmentMaterials (20260927155007)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[35mALTER TABLE "adjust_materials" RENAME TO "adjustment_materials"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_adjustment_materials_on_deleted_at" ON "adjustment_materials" ("deleted_at")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mDROP INDEX "index_adjust_materials_on_deleted_at"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_adjustment_materials_on_recorded_at" ON "adjustment_materials" ("recorded_at")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mDROP INDEX "index_adjust_materials_on_recorded_at"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_adjustment_materials_on_staff_id" ON "adjustment_materials" ("staff_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mDROP INDEX "index_adjust_materials_on_staff_id"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_adjustment_materials_on_material_id" ON "adjustment_materials" ("material_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mDROP INDEX "index_adjust_materials_on_material_id"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260927155007') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to RenameMaterialMovementsSourceIndex (20260927155536)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_material_movements_on_source" ON "material_movements" ("source_type", "source_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mDROP INDEX "index_inventory_movements_on_source"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260927155536') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to ChangeInboundsMaterialsDefault (20260927181640)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ainbounds_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "inbound_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "declared_kg" decimal(10,2), "flagged_as_anomaly" boolean NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_materials_on_deleted_at" ON "ainbounds_materials" ("deleted_at")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_materials_on_inbound_id" ON "ainbounds_materials" ("inbound_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_materials_on_material_id" ON "ainbounds_materials" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "ainbounds_materials" ("id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at")
+                     SELECT "id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at" FROM "inbounds_materials"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "inbounds_materials"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "inbounds_materials" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "material_id" integer NOT NULL, "inbound_id" integer NOT NULL, "quantity_kg" decimal(10,2) NOT NULL, "declared_kg" decimal(10,2), "flagged_as_anomaly" boolean DEFAULT 0 NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_f0bc507136"
+FOREIGN KEY ("inbound_id")
+  REFERENCES "inbounds" ("id")
+, CONSTRAINT "fk_rails_482971a782"
+FOREIGN KEY ("material_id")
+  REFERENCES "materials" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_material_id" ON "inbounds_materials" ("material_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_inbound_id" ON "inbounds_materials" ("inbound_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_materials_on_deleted_at" ON "inbounds_materials" ("deleted_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at")
+                     SELECT "id","material_id","inbound_id","quantity_kg","declared_kg","flagged_as_anomaly","deleted_at","created_at","updated_at" FROM "ainbounds_materials"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ainbounds_materials"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260927181640') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to RemovePickedUpFromInbounds (20260928155402)
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to RemovePickedUpFromInbounds (20260928155402)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ainbounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "staff_id" integer NOT NULL, "counterparty_id" integer NOT NULL, "counterparty_pic_name" varchar, "recorded_at" datetime(6) NOT NULL, "slip_no" varchar, "billing_no" varchar, "picked_up" boolean NOT NULL, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_on_deleted_at" ON "ainbounds" ("deleted_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_ainbounds_on_billing_no" ON "ainbounds" ("billing_no")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_on_counterparty_id" ON "ainbounds" ("counterparty_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_ainbounds_on_staff_id" ON "ainbounds" ("staff_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "ainbounds" ("id","staff_id","counterparty_id","counterparty_pic_name","recorded_at","slip_no","billing_no","picked_up","deleted_at","created_at","updated_at")
+                     SELECT "id","staff_id","counterparty_id","counterparty_pic_name","recorded_at","slip_no","billing_no","picked_up","deleted_at","created_at","updated_at" FROM "inbounds"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "inbounds"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "inbounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "staff_id" integer NOT NULL, "counterparty_id" integer NOT NULL, "counterparty_pic_name" varchar, "recorded_at" datetime(6) NOT NULL, "slip_no" varchar, "billing_no" varchar, "deleted_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_be870e5769"
+FOREIGN KEY ("counterparty_id")
+  REFERENCES "counterparties" ("id")
+, CONSTRAINT "fk_rails_18af2dc634"
+FOREIGN KEY ("staff_id")
+  REFERENCES "staffs" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_on_staff_id" ON "inbounds" ("staff_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_on_counterparty_id" ON "inbounds" ("counterparty_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_inbounds_on_billing_no" ON "inbounds" ("billing_no")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_inbounds_on_deleted_at" ON "inbounds" ("deleted_at")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "inbounds" ("id","staff_id","counterparty_id","counterparty_pic_name","recorded_at","slip_no","billing_no","deleted_at","created_at","updated_at")
+                     SELECT "id","staff_id","counterparty_id","counterparty_pic_name","recorded_at","slip_no","billing_no","deleted_at","created_at","updated_at" FROM "ainbounds"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "ainbounds"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260928155402') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mStaff Pluck (0.2ms)[0m  [1m[34mSELECT "staffs"."role" FROM "staffs"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStaff Exists? (2.0ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (1.7ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-09-29 01:19:22.784994"], ["updated_at", "2026-09-29 01:19:22.784994"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStaff Exists? (5.0ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_staff"], ["LIMIT", 1]]
+  [1m[36mStaff Create (2.4ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_staff"], ["name", "テスト作業員"], ["role", "staff"], ["deleted_at", nil], ["created_at", "2026-09-29 01:22:22.587035"], ["updated_at", "2026-09-29 01:22:22.587035"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mStaff Load (0.3ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mCounterparty Load (0.7ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" ORDER BY "counterparties"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCounterparty Create (0.6ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-09-29 01:30:40.192903"], ["updated_at", "2026-09-29 01:30:40.192903"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMaterial Load (0.3ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mMaterial Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-09-29 01:30:40.220824"], ["updated_at", "2026-09-29 01:30:40.220824"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInbound Create (0.7ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-09-28 01:30:50.514109"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-09-29 01:30:50.523088"], ["updated_at", "2026-09-29 01:30:50.523088"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInboundsMaterial Create (1.4ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-09-29 01:31:21.888876"], ["updated_at", "2026-09-29 01:31:21.888876"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInbound Create (1.0ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-09-29 01:32:54.737257"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-09-29 01:32:54.753801"], ["updated_at", "2026-09-29 01:32:54.753801"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInboundsMaterial Create (2.4ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 2], ["quantity_kg", 5.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-09-29 01:33:22.813222"], ["updated_at", "2026-09-29 01:33:22.813222"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mInbound Load (11.5ms)[0m  [1m[34mSELECT "inbounds".* FROM "inbounds" ORDER BY "inbounds"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mInbound Load (0.4ms)[0m  [1m[34mSELECT "inbounds".* FROM "inbounds" ORDER BY "inbounds"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mInboundsMaterial Load (1.1ms)[0m  [1m[34mSELECT "inbounds_materials".* FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ? /* loading for pp */ LIMIT ?[0m  [["inbound_id", 1], ["LIMIT", 11]]
+  [1m[36mInbound Load (0.4ms)[0m  [1m[34mSELECT "inbounds".* FROM "inbounds" ORDER BY "inbounds"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mInbound Load (0.2ms)[0m  [1m[34mSELECT "inbounds".* FROM "inbounds" ORDER BY "inbounds"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mInboundsMaterial Sum (0.9ms)[0m  [1m[34mSELECT SUM("inbounds_materials"."declared_kg") FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 1]]
+  [1m[36mMaterial Load (0.4ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mMaterialMovement Load (0.1ms)[0m  [1m[34mSELECT "material_movements".* FROM "material_movements" WHERE "material_movements"."material_id" = ? /* loading for pp */ LIMIT ?[0m  [["material_id", 1], ["LIMIT", 11]]
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mInboundsMaterial Load (0.1ms)[0m  [1m[34mSELECT "inbounds_materials".* FROM "inbounds_materials" WHERE "inbounds_materials"."material_id" = ? /* loading for pp */ LIMIT ?[0m  [["material_id", 1], ["LIMIT", 11]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mCounterparty Load (3.9ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" ORDER BY "counterparties"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mStaff Load (0.6ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInbound Create (1.5ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-09-30 21:00:54.889920"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-01 21:00:54.900546"], ["updated_at", "2026-10-01 21:00:54.900546"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMaterial Load (2.6ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mInboundsMaterial Create (0.8ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 3], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-01 21:01:03.999369"], ["updated_at", "2026-10-01 21:01:03.999369"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mStaff Load (3.1ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."role" = ? LIMIT ?[0m  [["role", "admin"], ["LIMIT", 1]]
