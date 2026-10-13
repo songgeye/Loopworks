@@ -21,4 +21,5 @@ Rails.application.routes.draw do
   resources :materials
 
   resources :inbounds, only: [:create]
+  resources :outbounds, only: [:create]
 end

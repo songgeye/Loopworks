@@ -14,7 +14,6 @@ class InboundsControllerTest < ActionDispatch::IntegrationTest
              inbound: {
                counterparty_id: @counterparty.id,
                staff_id: @staff.id,
-               recorded_at: Time.zone.now,
                inbounds_materials_attributes: [{ material_id: @material.id, quantity_kg: 10 }]
              }
            },
@@ -31,7 +30,6 @@ class InboundsControllerTest < ActionDispatch::IntegrationTest
              inbound: {
                counterparty_id: 999_999,
                staff_id: @staff.id,
-               recorded_at: Time.zone.now,
                inbounds_materials_attributes: [{ material_id: @material.id, quantity_kg: 10 }]
              }
            },

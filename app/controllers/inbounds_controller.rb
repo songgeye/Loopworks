@@ -15,7 +15,7 @@ class InboundsController < ApplicationController
 
   def inbound_params
     params.require(:inbound).permit(
-      :counterparty_id, :staff_id, :counterparty_pic_name, :recorded_at, :slip_no, :billing_no,
+      :counterparty_id, :staff_id, :counterparty_pic_name, :slip_no, :billing_no,
       inbounds_materials_attributes: [:material_id, :quantity_kg, :declared_kg]
     )
   end

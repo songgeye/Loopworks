@@ -3,7 +3,7 @@
 class CreateInbound
   def self.call(attributes)
     ActiveRecord::Base.transaction do
-      inbound = Inbound.create!(attributes)
+      inbound = Inbound.create!(attributes.merge(recorded_at: Time.zone.now))
       inbound.inbounds_materials.each do |inbounds_material|
         RecordMaterialMovement.call(
           source: inbounds_material,
