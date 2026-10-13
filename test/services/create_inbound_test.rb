@@ -13,7 +13,6 @@ class CreateInboundTest< ActiveSupport::TestCase
       CreateInbound.call(
         counterparty: @counterparty,
         staff: @staff,
-        recorded_at: Time.zone.now,
         inbounds_materials_attributes: [
           { material_id: @iron.id, quantity_kg: 10 },
           { material_id: @copper.id, quantity_kg: 5 }
@@ -29,7 +28,6 @@ class CreateInboundTest< ActiveSupport::TestCase
     inbound = CreateInbound.call(
       counterparty: @counterparty,
       staff: @staff,
-      recorded_at: Time.zone.now,
       inbounds_materials_attributes: [
         { material_id: @iron.id, quantity_kg: 10 },
         { material_id: nil, quantity_kg: nil }
@@ -45,7 +43,6 @@ class CreateInboundTest< ActiveSupport::TestCase
         CreateInbound.call(
           counterparty: @counterparty,
           staff: nil,
-          recorded_at: Time.zone.now,
           inbounds_materials_attributes: [{ material_id: @iron.id, quantity_kg: 10 }]
         )
       end
