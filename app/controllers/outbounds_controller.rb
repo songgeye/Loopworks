@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class OutboundsController < ApplicationController
+
   skip_before_action :authenticate_staff!
-  skip_forgery_protection
 
   def create
     outbound = CreateOutbound.call(outbound_params)

@@ -4662,3 +4662,315 @@ FOREIGN KEY ("outbound_id")
   [1m[36mActiveRecord::InternalMetadata Update (0.1ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2026-10-12 23:31:51.931793' WHERE "ar_internal_metadata"."key" = 'environment'[0m
   [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
   [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '37010742cee3285c53a7fe279d8ecc23fbc00fdb', '2026-10-12 23:31:51.932540', '2026-10-12 23:31:51.932541') RETURNING "key"[0m
+  [1m[36mCounterparty Load (0.9ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" ORDER BY "counterparties"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mStaff Load (0.3ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mMaterial Load (0.3ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mMaterial Load (0.2ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.0ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mInbound Create (0.4ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-13 00:42:39.341042"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-13 00:42:39.394185"], ["updated_at", "2026-10-13 00:42:39.394185"]]
+  [1m[36mInboundsMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 6], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-13 00:42:39.395344"], ["updated_at", "2026-10-13 00:42:39.395344"]]
+  [1m[36mInboundsMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["inbound_id", 6], ["quantity_kg", 5.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-13 00:42:39.395725"], ["updated_at", "2026-10-13 00:42:39.395725"]]
+  [1m[36mInboundsMaterial Load (0.0ms)[0m  [1m[34mSELECT "inbounds_materials".* FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 6]]
+  [1m[36mMaterialMovement Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 7], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.1ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["recorded_at", "2026-10-13 00:42:39.341042"], ["source_type", "InboundsMaterial"], ["source_id", 7], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-13 00:42:39.402833"], ["updated_at", "2026-10-13 00:42:39.402833"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Update (0.1ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 17.0], ["updated_at", "2026-10-13 00:42:39.406002"], ["id", 2]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 8], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.1ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 5.0], ["recorded_at", "2026-10-13 00:42:39.341042"], ["source_type", "InboundsMaterial"], ["source_id", 8], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-13 00:42:39.406862"], ["updated_at", "2026-10-13 00:42:39.406862"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 0.0], ["created_at", "2026-10-13 00:42:39.407519"], ["updated_at", "2026-10-13 00:42:39.407519"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 5.0], ["updated_at", "2026-10-13 00:42:39.407891"], ["id", 3]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMaterialMovement Count (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" IN (?, ?)[0m  [["source_type", "InboundsMaterial"], ["source_id", 7], ["source_id", 8]]
+  [1m[36mMaterial Load (0.8ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCurrentMaterial Load (0.4ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.5ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mCurrentMaterial Load (0.1ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 2], ["LIMIT", 1]]
+Started POST "/inbounds" for ::1 at 2026-10-13 01:59:47 +0900
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+NoMethodError (undefined method `skip_before_action' for class InboundsController):
+  
+app/controllers/inbounds_controller.rb:5:in `<class:InboundsController>'
+app/controllers/inbounds_controller.rb:3:in `<main>'
+  [1m[36mCounterparty Pluck (0.3ms)[0m  [1m[34mSELECT "counterparties"."id" FROM "counterparties"[0m
+  [1m[36mStaff Pluck (0.2ms)[0m  [1m[34mSELECT "staffs"."id" FROM "staffs"[0m
+  [1m[36mMaterial Pluck (0.0ms)[0m  [1m[34mSELECT "materials"."id" FROM "materials" WHERE "materials"."deleted_at" IS NULL[0m
+Started POST "/inbounds" for ::1 at 2026-10-13 02:02:34 +0900
+  
+NoMethodError (undefined method `skip_before_action' for class InboundsController):
+  
+app/controllers/inbounds_controller.rb:5:in `<class:InboundsController>'
+app/controllers/inbounds_controller.rb:3:in `<main>'
+Started POST "/inbounds" for ::1 at 2026-10-13 02:06:13 +0900
+Processing by InboundsController#create as */*
+  Parameters: {"inbound"=>{"counterparty_id"=>1, "staff_id"=>1, "recorded_at"=>"2026-10-13T01:00:00+09:00", "inbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>10}, {"material_id"=>2, "quantity_kg"=>5}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mCounterparty Load (0.2ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mStaff Load (0.2ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mMaterial Load (0.3ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mInbound Create (1.7ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-13 01:00:00"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-13 02:06:13.437842"], ["updated_at", "2026-10-13 02:06:13.437842"]]
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mInboundsMaterial Create (0.5ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 7], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-13 02:06:13.441932"], ["updated_at", "2026-10-13 02:06:13.441932"]]
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mInboundsMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["inbound_id", 7], ["quantity_kg", 5.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-13 02:06:13.443675"], ["updated_at", "2026-10-13 02:06:13.443675"]]
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mInboundsMaterial Load (0.1ms)[0m  [1m[34mSELECT "inbounds_materials".* FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 7]]
+  ↳ app/services/create_inbound.rb:7:in `block in call'
+  [1m[36mMaterialMovement Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 9], ["LIMIT", 1]]
+  ↳ app/services/record_material_movement.rb:7:in `block in call'
+  [1m[36mMaterialMovement Create (0.9ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["recorded_at", "2026-10-13 01:00:00"], ["source_type", "InboundsMaterial"], ["source_id", 9], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-13 02:06:13.456836"], ["updated_at", "2026-10-13 02:06:13.456836"]]
+  ↳ app/services/record_material_movement.rb:10:in `block in call'
+  [1m[36mCurrentMaterial Load (0.1ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  ↳ app/services/record_material_movement.rb:18:in `block in call'
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 27.0], ["updated_at", "2026-10-13 02:06:13.462482"], ["id", 2]]
+  ↳ app/services/record_material_movement.rb:19:in `block in call'
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 10], ["LIMIT", 1]]
+  ↳ app/services/record_material_movement.rb:7:in `block in call'
+  [1m[36mMaterialMovement Create (0.3ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 5.0], ["recorded_at", "2026-10-13 01:00:00"], ["source_type", "InboundsMaterial"], ["source_id", 10], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-13 02:06:13.463665"], ["updated_at", "2026-10-13 02:06:13.463665"]]
+  ↳ app/services/record_material_movement.rb:10:in `block in call'
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 2], ["LIMIT", 1]]
+  ↳ app/services/record_material_movement.rb:18:in `block in call'
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 10.0], ["updated_at", "2026-10-13 02:06:13.465422"], ["id", 3]]
+  ↳ app/services/record_material_movement.rb:19:in `block in call'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/services/create_inbound.rb:5:in `call'
+Completed 201 Created in 73ms (Views: 0.5ms | ActiveRecord: 10.1ms (16 queries, 0 cached) | GC: 5.8ms)
+
+
+Started GET "/signup" for 127.0.0.1 at 2026-10-13 02:06:35 +0900
+Started GET "/production_records" for 127.0.0.1 at 2026-10-13 02:06:35 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/production_records"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/signup"):
+  
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-10-13 02:06:37 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-10-13 02:06:37 +0900
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started POST "/inbounds" for ::1 at 2026-10-13 02:10:31 +0900
+Processing by InboundsController#create as */*
+  Parameters: {"inbound"=>{"counterparty_id"=>999, "staff_id"=>1, "recorded_at"=>"2026-10-13T01:00:00+09:00", "inbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>10}]}}
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mCounterparty Load (11.6ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 999], ["LIMIT", 1]]
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mStaff Load (0.3ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mMaterial Load (0.2ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/services/create_inbound.rb:6:in `block in call'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/services/create_inbound.rb:5:in `call'
+Completed 422 Unprocessable Content in 160ms (Views: 5.4ms | ActiveRecord: 14.9ms (3 queries, 0 cached) | GC: 3.7ms)
+
+
+  [1m[36mCounterparty Load (0.4ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" ORDER BY "counterparties"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mStaff Load (0.5ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" ORDER BY "staffs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mMaterial Load (0.2ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mMaterial Load (0.2ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mOutbound Create (0.5ms)[0m  [1m[32mINSERT INTO "outbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-13 02:38:05.385210"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-13 02:38:05.402483"], ["updated_at", "2026-10-13 02:38:05.402483"]]
+  [1m[36mOutboundsMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["outbound_id", 2], ["quantity_kg", -3.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-13 02:38:05.403726"], ["updated_at", "2026-10-13 02:38:05.403726"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mOutboundsMaterial Pluck (0.1ms)[0m  [1m[34mSELECT "outbounds_materials"."quantity_kg" FROM "outbounds_materials" WHERE "outbounds_materials"."outbound_id" = ?[0m  [["outbound_id", 2]]
+Started POST "/outbounds" for ::1 at 2026-10-14 01:52:54 +0900
+  
+NoMethodError (undefined method `skip_before_action' for class OutboundsController):
+  
+app/controllers/outbounds_controller.rb:4:in `<class:OutboundsController>'
+app/controllers/outbounds_controller.rb:3:in `<main>'
+Started POST "/outbounds" for ::1 at 2026-10-14 01:54:37 +0900
+  
+NoMethodError (undefined method `skip_before_action' for class OutboundsController):
+  
+app/controllers/outbounds_controller.rb:4:in `<class:OutboundsController>'
+app/controllers/outbounds_controller.rb:3:in `<main>'
+  [1m[36mCurrentMaterial Pluck (0.1ms)[0m  [1m[34mSELECT "current_materials"."material_id", "current_materials"."quantity_kg" FROM "current_materials"[0m
+Started POST "/outbounds" for ::1 at 2026-10-14 01:59:24 +0900
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+NoMethodError (undefined method `skip_before_action' for class OutboundsController):
+  
+app/controllers/outbounds_controller.rb:4:in `<class:OutboundsController>'
+app/controllers/outbounds_controller.rb:3:in `<main>'
+Started POST "/outbounds" for ::1 at 2026-10-14 02:00:21 +0900
+Processing by OutboundsController#create as */*
+  Parameters: {"outbound"=>{"counterparty_id"=>1, "staff_id"=>1, "outbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>3}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mCounterparty Load (0.3ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mStaff Load (0.2ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mMaterial Load (0.2ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mOutbound Create (1.0ms)[0m  [1m[32mINSERT INTO "outbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-14 02:00:21.402904"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:00:21.445323"], ["updated_at", "2026-10-14 02:00:21.445323"]]
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mOutboundsMaterial Create (0.4ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["outbound_id", 3], ["quantity_kg", -3.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:00:21.447424"], ["updated_at", "2026-10-14 02:00:21.447424"]]
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mOutboundsMaterial Load (0.1ms)[0m  [1m[34mSELECT "outbounds_materials".* FROM "outbounds_materials" WHERE "outbounds_materials"."outbound_id" = ?[0m  [["outbound_id", 3]]
+  ↳ app/services/create_outbound.rb:7:in `block in call'
+  [1m[36mMaterialMovement Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "OutboundsMaterial"], ["source_id", 3], ["LIMIT", 1]]
+  ↳ app/services/record_material_movement.rb:7:in `block in call'
+  [1m[36mMaterialMovement Create (0.7ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", -3.0], ["recorded_at", "2026-10-14 02:00:21.402904"], ["source_type", "OutboundsMaterial"], ["source_id", 3], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-14 02:00:21.456320"], ["updated_at", "2026-10-14 02:00:21.456320"]]
+  ↳ app/services/record_material_movement.rb:10:in `block in call'
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  ↳ app/services/record_material_movement.rb:18:in `block in call'
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 24.0], ["updated_at", "2026-10-14 02:00:21.461446"], ["id", 2]]
+  ↳ app/services/record_material_movement.rb:19:in `block in call'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/services/create_outbound.rb:5:in `call'
+Completed 201 Created in 65ms (Views: 0.2ms | ActiveRecord: 8.8ms (10 queries, 0 cached) | GC: 5.8ms)
+
+
+  [1m[36mCurrentMaterial Pluck (0.7ms)[0m  [1m[34mSELECT "current_materials"."material_id", "current_materials"."quantity_kg" FROM "current_materials"[0m
+Started POST "/outbounds" for ::1 at 2026-10-15 22:26:43 +0900
+Processing by OutboundsController#create as */*
+  Parameters: {"outbound"=>{"counterparty_id"=>1, "staff_id"=>1, "outbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>3}]}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mCounterparty Load (4.8ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mStaff Load (0.3ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mMaterial Load (0.3ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mOutbound Create (0.4ms)[0m  [1m[32mINSERT INTO "outbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-15 22:26:43.817496"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:26:43.864668"], ["updated_at", "2026-10-15 22:26:43.864668"]]
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mOutboundsMaterial Create (0.5ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["outbound_id", 4], ["quantity_kg", -3.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:26:43.865965"], ["updated_at", "2026-10-15 22:26:43.865965"]]
+  ↳ app/services/create_outbound.rb:6:in `block in call'
+  [1m[36mOutboundsMaterial Load (0.1ms)[0m  [1m[34mSELECT "outbounds_materials".* FROM "outbounds_materials" WHERE "outbounds_materials"."outbound_id" = ?[0m  [["outbound_id", 4]]
+  ↳ app/services/create_outbound.rb:7:in `block in call'
+  [1m[36mMaterialMovement Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "OutboundsMaterial"], ["source_id", 4], ["LIMIT", 1]]
+  ↳ app/services/record_material_movement.rb:7:in `block in call'
+  [1m[36mMaterialMovement Create (0.3ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", -3.0], ["recorded_at", "2026-10-15 22:26:43.817496"], ["source_type", "OutboundsMaterial"], ["source_id", 4], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:26:43.892807"], ["updated_at", "2026-10-15 22:26:43.892807"]]
+  ↳ app/services/record_material_movement.rb:10:in `block in call'
+  [1m[36mCurrentMaterial Load (0.1ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  ↳ app/services/record_material_movement.rb:18:in `block in call'
+  [1m[36mCurrentMaterial Update (0.1ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 21.0], ["updated_at", "2026-10-15 22:26:43.897964"], ["id", 2]]
+  ↳ app/services/record_material_movement.rb:19:in `block in call'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/services/create_outbound.rb:5:in `call'
+Completed 201 Created in 86ms (Views: 0.4ms | ActiveRecord: 7.5ms (10 queries, 0 cached) | GC: 12.7ms)
+
+
+Started GET "/materials" for ::1 at 2026-10-18 20:00:59 +0900
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by MaterialsController#index as */*
+Completed 401 Unauthorized in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.8ms)
+
+
+  
+ActionDispatch::Request::Session::DisabledSessionError (Your application has sessions disabled. To write to the session you must first configure a session store):
+  
+actionpack (7.2.3.1) lib/action_dispatch/request/session.rb:262:in `load_for_write!'
+actionpack (7.2.3.1) lib/action_dispatch/request/session.rb:155:in `[]='
+devise (5.0.4) lib/devise/controllers/store_location.rb:40:in `store_location_for'
+devise (5.0.4) lib/devise/failure_app.rb:256:in `store_location!'
+devise (5.0.4) lib/devise/failure_app.rb:87:in `redirect'
+devise (5.0.4) lib/devise/failure_app.rb:48:in `respond'
+actionpack (7.2.3.1) lib/abstract_controller/base.rb:215:in `process_action'
+actionpack (7.2.3.1) lib/abstract_controller/callbacks.rb:261:in `block in process_action'
+activesupport (7.2.3.1) lib/active_support/callbacks.rb:121:in `block in run_callbacks'
+i18n (1.15.2) lib/i18n.rb:383:in `with_locale'
+devise (5.0.4) lib/devise/failure_app.rb:23:in `block in <class:FailureApp>'
+activesupport (7.2.3.1) lib/active_support/callbacks.rb:130:in `instance_exec'
+activesupport (7.2.3.1) lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+activesupport (7.2.3.1) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (7.2.3.1) lib/abstract_controller/callbacks.rb:260:in `process_action'
+actionpack (7.2.3.1) lib/abstract_controller/base.rb:152:in `process'
+actionpack (7.2.3.1) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (7.2.3.1) lib/action_controller/metal.rb:319:in `block in action'
+devise (5.0.4) lib/devise/failure_app.rb:28:in `call'
+devise (5.0.4) lib/devise/delegator.rb:7:in `call'
+warden (1.2.9) lib/warden/manager.rb:143:in `call_failure_app'
+warden (1.2.9) lib/warden/manager.rb:129:in `process_unauthenticated'
+warden (1.2.9) lib/warden/manager.rb:44:in `call'
+rack (3.2.6) lib/rack/etag.rb:29:in `call'
+rack (3.2.6) lib/rack/conditional_get.rb:31:in `call'
+rack (3.2.6) lib/rack/head.rb:15:in `call'
+activerecord (7.2.3.1) lib/active_record/migration.rb:674:in `call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (7.2.3.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/executor.rb:16:in `call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (7.2.3.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (7.2.3.1) lib/rails/rack/logger.rb:29:in `call'
+sprockets-rails (3.5.2) lib/sprockets/rails/quiet_assets.rb:17:in `call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/remote_ip.rb:96:in `call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/request_id.rb:33:in `call'
+rack (3.2.6) lib/rack/runtime.rb:24:in `call'
+activesupport (7.2.3.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/executor.rb:16:in `call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.6) lib/rack/sendfile.rb:131:in `call'
+actionpack (7.2.3.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (7.2.3.1) lib/rails/engine.rb:535:in `call'
+puma (8.0.2) lib/puma/configuration.rb:305:in `call'
+puma (8.0.2) lib/puma/response.rb:79:in `block in handle_request'
+puma (8.0.2) lib/puma/thread_pool.rb:434:in `with_force_shutdown'
+puma (8.0.2) lib/puma/response.rb:78:in `handle_request'
+puma (8.0.2) lib/puma/server.rb:508:in `process_client'
+puma (8.0.2) lib/puma/server.rb:263:in `block in run'
+puma (8.0.2) lib/puma/thread_pool.rb:246:in `block in spawn_thread'
+Started GET "/materials" for ::1 at 2026-10-18 21:32:07 +0900
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by MaterialsController#index as */*
+  [1m[36mMaterial Load (0.5ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."display_order" ASC[0m
+  ↳ app/controllers/materials_controller.rb:7:in `index'
+Completed 200 OK in 50ms (Views: 26.7ms | ActiveRecord: 3.2ms (1 query, 0 cached) | GC: 24.3ms)
+
+
+Started GET "/materials" for ::1 at 2026-10-18 21:55:20 +0900
+Processing by MaterialsController#index as */*
+  [1m[36mMaterial Load (9.8ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."display_order" ASC[0m
+  ↳ app/controllers/materials_controller.rb:9:in `map'
+Completed 200 OK in 29ms (Views: 0.7ms | ActiveRecord: 9.8ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/materials" for ::1 at 2026-10-18 22:09:14 +0900
+Processing by MaterialsController#index as */*
+  [1m[36mMaterial Load (10.6ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL ORDER BY "materials"."display_order" ASC[0m
+  ↳ app/controllers/materials_controller.rb:10:in `map'
+Completed 200 OK in 19ms (Views: 0.3ms | ActiveRecord: 10.6ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/materials" for ::1 at 2026-10-19 00:11:35 +0900
+Processing by MaterialsController#create as */*
+  Parameters: {"material"=>{"name"=>"x", "display_order"=>9}}
+Completed 401 Unauthorized in 7ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/materials" for ::1 at 2026-10-19 00:15:37 +0900
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by MaterialsController#create as */*
+  Parameters: {"material"=>{"name"=>"x", "display_order"=>9}}
+Completed 401 Unauthorized in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+

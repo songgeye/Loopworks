@@ -740,3 +740,970 @@ RecordMaterialMovementTest: test_途中で失敗したら、台帳に何も残�
   [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
   [1m[36mMaterialMovement Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
   [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+CreateInboundTest: test_明細の数だけ台帳が増え、品目ごとに在庫が増える
+-----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.807321"], ["updated_at", "2026-10-13 01:00:23.807321"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.6ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.812429"], ["updated_at", "2026-10-13 01:00:23.812429"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.2ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.818912"], ["updated_at", "2026-10-13 01:00:23.818912"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.820173"], ["updated_at", "2026-10-13 01:00:23.820173"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.0ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mInbound Create (0.4ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-13 01:00:23.823332"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.835927"], ["updated_at", "2026-10-13 01:00:23.835927"]]
+  [1m[36mInboundsMaterial Create (0.3ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.836763"], ["updated_at", "2026-10-13 01:00:23.836763"]]
+  [1m[36mInboundsMaterial Create (0.3ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["inbound_id", 1], ["quantity_kg", 5.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.837786"], ["updated_at", "2026-10-13 01:00:23.837786"]]
+  [1m[36mInboundsMaterial Load (0.0ms)[0m  [1m[34mSELECT "inbounds_materials".* FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.3ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["recorded_at", "2026-10-13 01:00:23.823332"], ["source_type", "InboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-13 01:00:23.845264"], ["updated_at", "2026-10-13 01:00:23.845264"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Create (0.2ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 0.0], ["created_at", "2026-10-13 01:00:23.858090"], ["updated_at", "2026-10-13 01:00:23.858090"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Update (0.1ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 10.0], ["updated_at", "2026-10-13 01:00:23.859010"], ["id", 1]]
+  [1m[36mMaterialMovement Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 2], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.1ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 5.0], ["recorded_at", "2026-10-13 01:00:23.823332"], ["source_type", "InboundsMaterial"], ["source_id", 2], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-13 01:00:23.860409"], ["updated_at", "2026-10-13 01:00:23.860409"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Create (0.2ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 0.0], ["created_at", "2026-10-13 01:00:23.861318"], ["updated_at", "2026-10-13 01:00:23.861318"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 5.0], ["updated_at", "2026-10-13 01:00:23.862010"], ["id", 2]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.1ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------
+CreateInboundTest: test_空の明細行は無視される
+-----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.869316"], ["updated_at", "2026-10-13 01:00:23.869316"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.870031"], ["updated_at", "2026-10-13 01:00:23.870031"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.870885"], ["updated_at", "2026-10-13 01:00:23.870885"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.871461"], ["updated_at", "2026-10-13 01:00:23.871461"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mInbound Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-13 01:00:23.871768"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.872636"], ["updated_at", "2026-10-13 01:00:23.872636"]]
+  [1m[36mInboundsMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.873000"], ["updated_at", "2026-10-13 01:00:23.873000"]]
+  [1m[36mInboundsMaterial Load (0.0ms)[0m  [1m[34mSELECT "inbounds_materials".* FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.3ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["recorded_at", "2026-10-13 01:00:23.871768"], ["source_type", "InboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-13 01:00:23.873819"], ["updated_at", "2026-10-13 01:00:23.873819"]]
+  [1m[36mCurrentMaterial Load (0.1ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Create (0.2ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 0.0], ["created_at", "2026-10-13 01:00:23.874883"], ["updated_at", "2026-10-13 01:00:23.874883"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 10.0], ["updated_at", "2026-10-13 01:00:23.875534"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mInboundsMaterial Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+CreateInboundTest: test_途中で失敗したら、入荷も台帳も残らない
+-------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.879056"], ["updated_at", "2026-10-13 01:00:23.879056"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.879661"], ["updated_at", "2026-10-13 01:00:23.879661"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.880627"], ["updated_at", "2026-10-13 01:00:23.880627"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-13 01:00:23.881286"], ["updated_at", "2026-10-13 01:00:23.881286"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mInbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mInbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------
+InboundsControllerTest: test_存在しない取引先だと422が返り、何も保存されない
+------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.6ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-13 02:15:29.989239"], ["updated_at", "2026-10-13 02:15:29.989239"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.5ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-13 02:15:29.994815"], ["updated_at", "2026-10-13 02:15:29.994815"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-13 02:15:30.000938"], ["updated_at", "2026-10-13 02:15:30.000938"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mInbound Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+Started POST "/inbounds" for 127.0.0.1 at 2026-10-13 02:15:30 +0900
+Processing by InboundsController#create as JSON
+  Parameters: {"inbound"=>{"counterparty_id"=>999999, "staff_id"=>1, "recorded_at"=>"2026-10-13T02:15:30.006+09:00", "inbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>10}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Load (0.1ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 999999], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.1ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 422 Unprocessable Content in 24ms (Views: 0.2ms | ActiveRecord: 0.9ms (3 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mInbound Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------
+InboundsControllerTest: test_入荷を登録できる
+-------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-13 02:15:30.085235"], ["updated_at", "2026-10-13 02:15:30.085235"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.2ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-13 02:15:30.086448"], ["updated_at", "2026-10-13 02:15:30.086448"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-13 02:15:30.088236"], ["updated_at", "2026-10-13 02:15:30.088236"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mInbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+Started POST "/inbounds" for 127.0.0.1 at 2026-10-13 02:15:30 +0900
+Processing by InboundsController#create as JSON
+  Parameters: {"inbound"=>{"counterparty_id"=>1, "staff_id"=>1, "recorded_at"=>"2026-10-13T02:15:30.089+09:00", "inbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>10}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Load (0.3ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.1ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.3ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mInbound Create (2.2ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-13 02:15:30.089000"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-13 02:15:30.097712"], ["updated_at", "2026-10-13 02:15:30.097712"]]
+  [1m[36mInboundsMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-13 02:15:30.101125"], ["updated_at", "2026-10-13 02:15:30.101125"]]
+  [1m[36mInboundsMaterial Load (0.1ms)[0m  [1m[34mSELECT "inbounds_materials".* FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.3ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["recorded_at", "2026-10-13 02:15:30.089000"], ["source_type", "InboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-13 02:15:30.123593"], ["updated_at", "2026-10-13 02:15:30.123593"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 0.0], ["created_at", "2026-10-13 02:15:30.127872"], ["updated_at", "2026-10-13 02:15:30.127872"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 10.0], ["updated_at", "2026-10-13 02:15:30.128472"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 39ms (Views: 0.1ms | ActiveRecord: 4.0ms (11 queries, 0 cached) | GC: 14.5ms)
+  [1m[36mInbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------
+OutboundsControllerTest: test_存在しない取引先だと422が返り、何も保存されない
+-------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.9ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-14 02:14:01.103856"], ["updated_at", "2026-10-14 02:14:01.103856"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.7ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:14:01.112754"], ["updated_at", "2026-10-14 02:14:01.112754"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.3ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-14 02:14:01.121451"], ["updated_at", "2026-10-14 02:14:01.121451"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.2ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["created_at", "2026-10-14 02:14:01.128029"], ["updated_at", "2026-10-14 02:14:01.128029"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mOutbound Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "outbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+Started POST "/outbounds" for 127.0.0.1 at 2026-10-14 02:14:01 +0900
+Processing by OutboundsController#create as JSON
+  Parameters: {"outbound"=>{"counterparty_id"=>999999, "staff_id"=>1, "outbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>3}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Load (0.1ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 999999], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.0ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 422 Unprocessable Content in 21ms (Views: 0.1ms | ActiveRecord: 0.7ms (3 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mOutbound Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "outbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.1ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+OutboundsControllerTest: test_出荷を登録すると、在庫が減る
+--------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-14 02:14:01.195461"], ["updated_at", "2026-10-14 02:14:01.195461"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.6ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:14:01.196187"], ["updated_at", "2026-10-14 02:14:01.196187"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-14 02:14:01.197738"], ["updated_at", "2026-10-14 02:14:01.197738"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["created_at", "2026-10-14 02:14:01.198294"], ["updated_at", "2026-10-14 02:14:01.198294"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+Started POST "/outbounds" for 127.0.0.1 at 2026-10-14 02:14:01 +0900
+Processing by OutboundsController#create as JSON
+  Parameters: {"outbound"=>{"counterparty_id"=>1, "staff_id"=>1, "outbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>3}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Load (0.1ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.0ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mOutbound Create (0.1ms)[0m  [1m[32mINSERT INTO "outbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-14 02:14:01.199602"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:14:01.200692"], ["updated_at", "2026-10-14 02:14:01.200692"]]
+  [1m[36mOutboundsMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["outbound_id", 1], ["quantity_kg", -3.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:14:01.201074"], ["updated_at", "2026-10-14 02:14:01.201074"]]
+  [1m[36mOutboundsMaterial Load (0.1ms)[0m  [1m[34mSELECT "outbounds_materials".* FROM "outbounds_materials" WHERE "outbounds_materials"."outbound_id" = ?[0m  [["outbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "OutboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.4ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", -3.0], ["recorded_at", "2026-10-14 02:14:01.199602"], ["source_type", "OutboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-14 02:14:01.206365"], ["updated_at", "2026-10-14 02:14:01.206365"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 7.0], ["updated_at", "2026-10-14 02:14:01.207660"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 21ms (Views: 12.0ms | ActiveRecord: 0.9ms (10 queries, 0 cached) | GC: 11.6ms)
+  [1m[36mMaterialMovement Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Load (0.1ms)[0m  [1m[34mSELECT "material_movements".* FROM "material_movements" ORDER BY "material_movements"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------
+InboundsControllerTest: test_存在しない取引先だと422が返り、何も保存されない
+------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.3ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-14 02:16:27.969415"], ["updated_at", "2026-10-14 02:16:27.969415"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.6ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:16:27.974563"], ["updated_at", "2026-10-14 02:16:27.974563"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.2ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-14 02:16:27.981013"], ["updated_at", "2026-10-14 02:16:27.981013"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mInbound Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+Started POST "/inbounds" for 127.0.0.1 at 2026-10-14 02:16:27 +0900
+Processing by InboundsController#create as JSON
+  Parameters: {"inbound"=>{"counterparty_id"=>999999, "staff_id"=>1, "inbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>10}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Load (0.1ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 999999], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 422 Unprocessable Content in 18ms (Views: 0.1ms | ActiveRecord: 0.7ms (3 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mInbound Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------
+InboundsControllerTest: test_入荷を登録できる
+-------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-14 02:16:28.059624"], ["updated_at", "2026-10-14 02:16:28.059624"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:16:28.060330"], ["updated_at", "2026-10-14 02:16:28.060330"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-14 02:16:28.061009"], ["updated_at", "2026-10-14 02:16:28.061009"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mInbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+Started POST "/inbounds" for 127.0.0.1 at 2026-10-14 02:16:28 +0900
+Processing by InboundsController#create as JSON
+  Parameters: {"inbound"=>{"counterparty_id"=>1, "staff_id"=>1, "inbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>10}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Load (0.1ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.0ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mInbound Create (0.0ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-14 02:16:28.062443"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:16:28.063535"], ["updated_at", "2026-10-14 02:16:28.063535"]]
+  [1m[36mInboundsMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-14 02:16:28.063885"], ["updated_at", "2026-10-14 02:16:28.063885"]]
+  [1m[36mInboundsMaterial Load (0.0ms)[0m  [1m[34mSELECT "inbounds_materials".* FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.4ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["recorded_at", "2026-10-14 02:16:28.062443"], ["source_type", "InboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-14 02:16:28.068047"], ["updated_at", "2026-10-14 02:16:28.068047"]]
+  [1m[36mCurrentMaterial Load (0.1ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 0.0], ["created_at", "2026-10-14 02:16:28.072120"], ["updated_at", "2026-10-14 02:16:28.072120"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Update (0.1ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 10.0], ["updated_at", "2026-10-14 02:16:28.083774"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 22ms (Views: 0.1ms | ActiveRecord: 1.3ms (11 queries, 0 cached) | GC: 10.9ms)
+  [1m[36mInbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------
+CreateOutboundTest: test_空の明細行は無視される
+------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.4ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:56.933205"], ["updated_at", "2026-10-14 02:22:56.933205"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.5ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:56.939336"], ["updated_at", "2026-10-14 02:22:56.939336"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:56.945930"], ["updated_at", "2026-10-14 02:22:56.945930"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:56.946822"], ["updated_at", "2026-10-14 02:22:56.946822"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["created_at", "2026-10-14 02:22:56.950126"], ["updated_at", "2026-10-14 02:22:56.950126"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 10.0], ["created_at", "2026-10-14 02:22:56.950628"], ["updated_at", "2026-10-14 02:22:56.950628"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mOutbound Create (0.1ms)[0m  [1m[32mINSERT INTO "outbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-14 02:22:56.953318"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:56.970782"], ["updated_at", "2026-10-14 02:22:56.970782"]]
+  [1m[36mOutboundsMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["outbound_id", 1], ["quantity_kg", -3.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:56.971596"], ["updated_at", "2026-10-14 02:22:56.971596"]]
+  [1m[36mOutboundsMaterial Load (0.1ms)[0m  [1m[34mSELECT "outbounds_materials".* FROM "outbounds_materials" WHERE "outbounds_materials"."outbound_id" = ?[0m  [["outbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "OutboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.4ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", -3.0], ["recorded_at", "2026-10-14 02:22:56.953318"], ["source_type", "OutboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-14 02:22:56.979880"], ["updated_at", "2026-10-14 02:22:56.979880"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 7.0], ["updated_at", "2026-10-14 02:22:56.981361"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mOutboundsMaterial Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "outbounds_materials" WHERE "outbounds_materials"."outbound_id" = ?[0m  [["outbound_id", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------
+CreateOutboundTest: test_途中で失敗したら、出荷も台帳も残らず、在庫も変わらない
+----------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:56.985511"], ["updated_at", "2026-10-14 02:22:56.985511"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:56.986125"], ["updated_at", "2026-10-14 02:22:56.986125"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:56.986953"], ["updated_at", "2026-10-14 02:22:56.986953"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:56.987555"], ["updated_at", "2026-10-14 02:22:56.987555"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["created_at", "2026-10-14 02:22:56.987913"], ["updated_at", "2026-10-14 02:22:56.987913"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 10.0], ["created_at", "2026-10-14 02:22:56.988237"], ["updated_at", "2026-10-14 02:22:56.988237"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mOutbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "outbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mOutbound Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "outbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+CreateOutboundTest: test_明細の数だけ台帳が増え、品目ごとに在庫が減る
+-----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:57.002294"], ["updated_at", "2026-10-14 02:22:57.002294"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:57.002969"], ["updated_at", "2026-10-14 02:22:57.002969"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:57.003739"], ["updated_at", "2026-10-14 02:22:57.003739"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:57.004275"], ["updated_at", "2026-10-14 02:22:57.004275"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["created_at", "2026-10-14 02:22:57.004612"], ["updated_at", "2026-10-14 02:22:57.004612"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 10.0], ["created_at", "2026-10-14 02:22:57.004915"], ["updated_at", "2026-10-14 02:22:57.004915"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.0ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mOutbound Create (0.0ms)[0m  [1m[32mINSERT INTO "outbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-14 02:22:57.005302"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:57.006201"], ["updated_at", "2026-10-14 02:22:57.006201"]]
+  [1m[36mOutboundsMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["outbound_id", 1], ["quantity_kg", -3.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:57.006461"], ["updated_at", "2026-10-14 02:22:57.006461"]]
+  [1m[36mOutboundsMaterial Create (0.3ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["outbound_id", 1], ["quantity_kg", -2.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-14 02:22:57.006671"], ["updated_at", "2026-10-14 02:22:57.006671"]]
+  [1m[36mOutboundsMaterial Load (0.0ms)[0m  [1m[34mSELECT "outbounds_materials".* FROM "outbounds_materials" WHERE "outbounds_materials"."outbound_id" = ?[0m  [["outbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "OutboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.1ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", -3.0], ["recorded_at", "2026-10-14 02:22:57.005302"], ["source_type", "OutboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-14 02:22:57.007642"], ["updated_at", "2026-10-14 02:22:57.007642"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 7.0], ["updated_at", "2026-10-14 02:22:57.008127"], ["id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "OutboundsMaterial"], ["source_id", 2], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.3ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", -2.0], ["recorded_at", "2026-10-14 02:22:57.005302"], ["source_type", "OutboundsMaterial"], ["source_id", 2], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-14 02:22:57.008577"], ["updated_at", "2026-10-14 02:22:57.008577"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 2], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 8.0], ["updated_at", "2026-10-14 02:22:57.009642"], ["id", 2]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+DashboardControllerTest: test_should_get_index
+----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------
+OutboundsControllerTest: test_存在しない取引先だと422が返り、何も保存されない
+-------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.3ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.321330"], ["updated_at", "2026-10-15 22:25:44.321330"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.6ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.327002"], ["updated_at", "2026-10-15 22:25:44.327002"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.333830"], ["updated_at", "2026-10-15 22:25:44.333830"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.2ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["created_at", "2026-10-15 22:25:44.338113"], ["updated_at", "2026-10-15 22:25:44.338113"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mOutbound Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "outbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+Started POST "/outbounds" for 127.0.0.1 at 2026-10-15 22:25:44 +0900
+Processing by OutboundsController#create as JSON
+  Parameters: {"outbound"=>{"counterparty_id"=>999999, "staff_id"=>1, "outbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>3}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Load (0.1ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 999999], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.0ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 422 Unprocessable Content in 17ms (Views: 0.1ms | ActiveRecord: 0.6ms (3 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mOutbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "outbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.1ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+OutboundsControllerTest: test_出荷を登録すると、在庫が減る
+--------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.410899"], ["updated_at", "2026-10-15 22:25:44.410899"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.411401"], ["updated_at", "2026-10-15 22:25:44.411401"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.412132"], ["updated_at", "2026-10-15 22:25:44.412132"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["created_at", "2026-10-15 22:25:44.412577"], ["updated_at", "2026-10-15 22:25:44.412577"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+Started POST "/outbounds" for 127.0.0.1 at 2026-10-15 22:25:44 +0900
+Processing by OutboundsController#create as JSON
+  Parameters: {"outbound"=>{"counterparty_id"=>1, "staff_id"=>1, "outbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>3}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Load (0.1ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mOutbound Create (0.1ms)[0m  [1m[32mINSERT INTO "outbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-15 22:25:44.413704"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.424794"], ["updated_at", "2026-10-15 22:25:44.424794"]]
+  [1m[36mOutboundsMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["outbound_id", 1], ["quantity_kg", -3.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.425515"], ["updated_at", "2026-10-15 22:25:44.425515"]]
+  [1m[36mOutboundsMaterial Load (0.2ms)[0m  [1m[34mSELECT "outbounds_materials".* FROM "outbounds_materials" WHERE "outbounds_materials"."outbound_id" = ?[0m  [["outbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "OutboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.4ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", -3.0], ["recorded_at", "2026-10-15 22:25:44.413704"], ["source_type", "OutboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:25:44.431602"], ["updated_at", "2026-10-15 22:25:44.431602"]]
+  [1m[36mCurrentMaterial Load (0.1ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Update (0.1ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 7.0], ["updated_at", "2026-10-15 22:25:44.434197"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 22ms (Views: 0.1ms | ActiveRecord: 1.2ms (10 queries, 0 cached) | GC: 10.4ms)
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Load (0.1ms)[0m  [1m[34mSELECT "material_movements".* FROM "material_movements" ORDER BY "material_movements"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------
+ProductionRecordsControllerTest: test_should_get_show
+-----------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------
+ProductionRecordsControllerTest: test_should_get_index
+------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------
+ProductionRecordsControllerTest: test_should_get_new
+----------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------
+ProductionRecordsControllerTest: test_should_get_edit
+-----------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------
+InboundsControllerTest: test_存在しない取引先だと422が返り、何も保存されない
+------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.3ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.442048"], ["updated_at", "2026-10-15 22:25:44.442048"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.3ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.443575"], ["updated_at", "2026-10-15 22:25:44.443575"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.3ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.444958"], ["updated_at", "2026-10-15 22:25:44.444958"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mInbound Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+Started POST "/inbounds" for 127.0.0.1 at 2026-10-15 22:25:44 +0900
+Processing by InboundsController#create as JSON
+  Parameters: {"inbound"=>{"counterparty_id"=>999999, "staff_id"=>1, "inbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>10}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Load (0.1ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 999999], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.0ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 422 Unprocessable Content in 11ms (Views: 0.1ms | ActiveRecord: 0.8ms (3 queries, 0 cached) | GC: 0.9ms)
+  [1m[36mInbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------
+InboundsControllerTest: test_入荷を登録できる
+-------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.2ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.468290"], ["updated_at", "2026-10-15 22:25:44.468290"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.2ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.469915"], ["updated_at", "2026-10-15 22:25:44.469915"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.471878"], ["updated_at", "2026-10-15 22:25:44.471878"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mInbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+Started POST "/inbounds" for 127.0.0.1 at 2026-10-15 22:25:44 +0900
+Processing by InboundsController#create as JSON
+  Parameters: {"inbound"=>{"counterparty_id"=>1, "staff_id"=>1, "inbounds_materials_attributes"=>[{"material_id"=>1, "quantity_kg"=>10}]}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Load (0.2ms)[0m  [1m[34mSELECT "counterparties".* FROM "counterparties" WHERE "counterparties"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mStaff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mInbound Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-15 22:25:44.474472"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.476709"], ["updated_at", "2026-10-15 22:25:44.476709"]]
+  [1m[36mInboundsMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.477662"], ["updated_at", "2026-10-15 22:25:44.477662"]]
+  [1m[36mInboundsMaterial Load (0.0ms)[0m  [1m[34mSELECT "inbounds_materials".* FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.4ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["recorded_at", "2026-10-15 22:25:44.474472"], ["source_type", "InboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:25:44.479836"], ["updated_at", "2026-10-15 22:25:44.479836"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 0.0], ["created_at", "2026-10-15 22:25:44.481003"], ["updated_at", "2026-10-15 22:25:44.481003"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 10.0], ["updated_at", "2026-10-15 22:25:44.481468"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 8ms (Views: 0.2ms | ActiveRecord: 1.2ms (11 queries, 0 cached) | GC: 0.2ms)
+  [1m[36mInbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------
+CreateOutboundTest: test_空の明細行は無視される
+------------------------------------
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.486553"], ["updated_at", "2026-10-15 22:25:44.486553"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.487518"], ["updated_at", "2026-10-15 22:25:44.487518"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.488688"], ["updated_at", "2026-10-15 22:25:44.488688"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.489353"], ["updated_at", "2026-10-15 22:25:44.489353"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["created_at", "2026-10-15 22:25:44.489715"], ["updated_at", "2026-10-15 22:25:44.489715"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 10.0], ["created_at", "2026-10-15 22:25:44.490172"], ["updated_at", "2026-10-15 22:25:44.490172"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.2ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mOutbound Create (0.2ms)[0m  [1m[32mINSERT INTO "outbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-15 22:25:44.490513"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.491939"], ["updated_at", "2026-10-15 22:25:44.491939"]]
+  [1m[36mOutboundsMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["outbound_id", 1], ["quantity_kg", -3.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.493014"], ["updated_at", "2026-10-15 22:25:44.493014"]]
+  [1m[36mOutboundsMaterial Load (0.0ms)[0m  [1m[34mSELECT "outbounds_materials".* FROM "outbounds_materials" WHERE "outbounds_materials"."outbound_id" = ?[0m  [["outbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "OutboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.4ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", -3.0], ["recorded_at", "2026-10-15 22:25:44.490513"], ["source_type", "OutboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:25:44.494349"], ["updated_at", "2026-10-15 22:25:44.494349"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Update (0.1ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 7.0], ["updated_at", "2026-10-15 22:25:44.495624"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mOutboundsMaterial Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "outbounds_materials" WHERE "outbounds_materials"."outbound_id" = ?[0m  [["outbound_id", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------
+CreateOutboundTest: test_途中で失敗したら、出荷も台帳も残らず、在庫も変わらない
+----------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.499794"], ["updated_at", "2026-10-15 22:25:44.499794"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.500355"], ["updated_at", "2026-10-15 22:25:44.500355"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.501160"], ["updated_at", "2026-10-15 22:25:44.501160"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.501775"], ["updated_at", "2026-10-15 22:25:44.501775"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["created_at", "2026-10-15 22:25:44.502144"], ["updated_at", "2026-10-15 22:25:44.502144"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 10.0], ["created_at", "2026-10-15 22:25:44.502467"], ["updated_at", "2026-10-15 22:25:44.502467"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mOutbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "outbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mOutbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "outbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+CreateOutboundTest: test_明細の数だけ台帳が増え、品目ごとに在庫が減る
+-----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.506307"], ["updated_at", "2026-10-15 22:25:44.506307"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.506770"], ["updated_at", "2026-10-15 22:25:44.506770"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.507396"], ["updated_at", "2026-10-15 22:25:44.507396"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.508432"], ["updated_at", "2026-10-15 22:25:44.508432"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["created_at", "2026-10-15 22:25:44.508794"], ["updated_at", "2026-10-15 22:25:44.508794"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 10.0], ["created_at", "2026-10-15 22:25:44.509139"], ["updated_at", "2026-10-15 22:25:44.509139"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.0ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mOutbound Create (0.1ms)[0m  [1m[32mINSERT INTO "outbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-15 22:25:44.509679"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.510659"], ["updated_at", "2026-10-15 22:25:44.510659"]]
+  [1m[36mOutboundsMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["outbound_id", 1], ["quantity_kg", -3.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.511062"], ["updated_at", "2026-10-15 22:25:44.511062"]]
+  [1m[36mOutboundsMaterial Create (0.3ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["outbound_id", 1], ["quantity_kg", -2.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.511324"], ["updated_at", "2026-10-15 22:25:44.511324"]]
+  [1m[36mOutboundsMaterial Load (0.0ms)[0m  [1m[34mSELECT "outbounds_materials".* FROM "outbounds_materials" WHERE "outbounds_materials"."outbound_id" = ?[0m  [["outbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "OutboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.1ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", -3.0], ["recorded_at", "2026-10-15 22:25:44.509679"], ["source_type", "OutboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:25:44.512530"], ["updated_at", "2026-10-15 22:25:44.512530"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 7.0], ["updated_at", "2026-10-15 22:25:44.513142"], ["id", 1]]
+  [1m[36mMaterialMovement Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "OutboundsMaterial"], ["source_id", 2], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.1ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", -2.0], ["recorded_at", "2026-10-15 22:25:44.509679"], ["source_type", "OutboundsMaterial"], ["source_id", 2], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:25:44.513738"], ["updated_at", "2026-10-15 22:25:44.513738"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 2], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 8.0], ["updated_at", "2026-10-15 22:25:44.514350"], ["id", 2]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+SessionsControllerTest: test_should_get_new
+-------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------
+RecordMaterialMovementTest: test_同じ明細に2回呼ぶと、エラーになる
+--------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.518772"], ["updated_at", "2026-10-15 22:25:44.518772"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.519317"], ["updated_at", "2026-10-15 22:25:44.519317"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.520023"], ["updated_at", "2026-10-15 22:25:44.520023"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mInbound Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-15 22:25:44.520276"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.520444"], ["updated_at", "2026-10-15 22:25:44.520444"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mInboundsMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.520883"], ["updated_at", "2026-10-15 22:25:44.520883"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (8.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Exists? (8.4ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.1ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["recorded_at", "2026-10-15 22:25:44.520276"], ["source_type", "InboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:25:44.530180"], ["updated_at", "2026-10-15 22:25:44.530180"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 0.0], ["created_at", "2026-10-15 22:25:44.531239"], ["updated_at", "2026-10-15 22:25:44.531239"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 10.0], ["updated_at", "2026-10-15 22:25:44.531635"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------
+RecordMaterialMovementTest: test_途中で失敗したら、台帳に何も残らない
+---------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.535214"], ["updated_at", "2026-10-15 22:25:44.535214"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.2ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.536453"], ["updated_at", "2026-10-15 22:25:44.536453"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.538411"], ["updated_at", "2026-10-15 22:25:44.538411"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mInbound Create (0.2ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-15 22:25:44.538821"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.539026"], ["updated_at", "2026-10-15 22:25:44.539026"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mInboundsMaterial Create (0.2ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.540022"], ["updated_at", "2026-10-15 22:25:44.540022"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+RecordMaterialMovementTest: test_出荷すると、在庫が減る
+--------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.546418"], ["updated_at", "2026-10-15 22:25:44.546418"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.547077"], ["updated_at", "2026-10-15 22:25:44.547077"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.548201"], ["updated_at", "2026-10-15 22:25:44.548201"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mInbound Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-15 22:25:44.548563"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.548742"], ["updated_at", "2026-10-15 22:25:44.548742"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mInboundsMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.549194"], ["updated_at", "2026-10-15 22:25:44.549194"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.0ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["recorded_at", "2026-10-15 22:25:44.548563"], ["source_type", "InboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:25:44.550364"], ["updated_at", "2026-10-15 22:25:44.550364"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 0.0], ["created_at", "2026-10-15 22:25:44.550961"], ["updated_at", "2026-10-15 22:25:44.550961"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Update (0.1ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 10.0], ["updated_at", "2026-10-15 22:25:44.551686"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mOutbound Create (0.1ms)[0m  [1m[32mINSERT INTO "outbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-15 22:25:44.552267"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.552474"], ["updated_at", "2026-10-15 22:25:44.552474"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mOutboundsMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "outbounds_materials" ("material_id", "outbound_id", "quantity_kg", "declared_kg", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["outbound_id", 1], ["quantity_kg", -3.0], ["declared_kg", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.553043"], ["updated_at", "2026-10-15 22:25:44.553043"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "OutboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.0ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", -3.0], ["recorded_at", "2026-10-15 22:25:44.552267"], ["source_type", "OutboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:25:44.553809"], ["updated_at", "2026-10-15 22:25:44.553809"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 7.0], ["updated_at", "2026-10-15 22:25:44.554478"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Sum (0.3ms)[0m  [1m[34mSELECT SUM("material_movements"."quantity_kg") FROM "material_movements" WHERE "material_movements"."material_id" = ?[0m  [["material_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------
+CreateInboundTest: test_空の明細行は無視される
+-----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.558199"], ["updated_at", "2026-10-15 22:25:44.558199"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.558705"], ["updated_at", "2026-10-15 22:25:44.558705"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.559544"], ["updated_at", "2026-10-15 22:25:44.559544"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.560433"], ["updated_at", "2026-10-15 22:25:44.560433"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mInbound Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-15 22:25:44.560803"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.561707"], ["updated_at", "2026-10-15 22:25:44.561707"]]
+  [1m[36mInboundsMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.562060"], ["updated_at", "2026-10-15 22:25:44.562060"]]
+  [1m[36mInboundsMaterial Load (0.0ms)[0m  [1m[34mSELECT "inbounds_materials".* FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.4ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["recorded_at", "2026-10-15 22:25:44.560803"], ["source_type", "InboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:25:44.563235"], ["updated_at", "2026-10-15 22:25:44.563235"]]
+  [1m[36mCurrentMaterial Load (0.1ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Create (0.2ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 0.0], ["created_at", "2026-10-15 22:25:44.564741"], ["updated_at", "2026-10-15 22:25:44.564741"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 10.0], ["updated_at", "2026-10-15 22:25:44.565469"], ["id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mInboundsMaterial Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+CreateInboundTest: test_途中で失敗したら、入荷も台帳も残らない
+-------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.1ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.568635"], ["updated_at", "2026-10-15 22:25:44.568635"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.569165"], ["updated_at", "2026-10-15 22:25:44.569165"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.569820"], ["updated_at", "2026-10-15 22:25:44.569820"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.570302"], ["updated_at", "2026-10-15 22:25:44.570302"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mInbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mInbound Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "inbounds"[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+CreateInboundTest: test_明細の数だけ台帳が増え、品目ごとに在庫が増える
+-----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mStaff Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "staffs" WHERE "staffs"."username" = ? LIMIT ?[0m  [["username", "test_admin"], ["LIMIT", 1]]
+  [1m[36mStaff Create (0.2ms)[0m  [1m[32mINSERT INTO "staffs" ("username", "name", "role", "deleted_at", "created_at", "updated_at", "encrypted_password", "remember_created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["username", "test_admin"], ["name", "テスト管理者"], ["role", "admin"], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.580595"], ["updated_at", "2026-10-15 22:25:44.580595"], ["encrypted_password", "[FILTERED]"], ["remember_created_at", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCounterparty Create (0.1ms)[0m  [1m[32mINSERT INTO "counterparties" ("party_type", "name", "address", "date_of_birth", "id_type", "id_confirmed_at", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["party_type", 0], ["name", "テスト取引先"], ["address", nil], ["date_of_birth", nil], ["id_type", nil], ["id_confirmed_at", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.581418"], ["updated_at", "2026-10-15 22:25:44.581418"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト鉄"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト鉄"], ["display_order", 1], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.583981"], ["updated_at", "2026-10-15 22:25:44.583981"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "materials" WHERE "materials"."name" = ? AND "materials"."deleted_at" IS NULL LIMIT ?[0m  [["name", "テスト銅"], ["LIMIT", 1]]
+  [1m[36mMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "materials" ("name", "display_order", "deleted_at", "created_at", "updated_at", "stock_target") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["name", "テスト銅"], ["display_order", 2], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.585344"], ["updated_at", "2026-10-15 22:25:44.585344"], ["stock_target", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMaterial Load (0.1ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mMaterial Load (0.0ms)[0m  [1m[34mSELECT "materials".* FROM "materials" WHERE "materials"."deleted_at" IS NULL AND "materials"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mInbound Create (0.1ms)[0m  [1m[32mINSERT INTO "inbounds" ("staff_id", "counterparty_id", "counterparty_pic_name", "recorded_at", "slip_no", "billing_no", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["staff_id", 1], ["counterparty_id", 1], ["counterparty_pic_name", nil], ["recorded_at", "2026-10-15 22:25:44.586001"], ["slip_no", nil], ["billing_no", nil], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.587290"], ["updated_at", "2026-10-15 22:25:44.587290"]]
+  [1m[36mInboundsMaterial Create (0.0ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["inbound_id", 1], ["quantity_kg", 10.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.587791"], ["updated_at", "2026-10-15 22:25:44.587791"]]
+  [1m[36mInboundsMaterial Create (0.3ms)[0m  [1m[32mINSERT INTO "inbounds_materials" ("material_id", "inbound_id", "quantity_kg", "declared_kg", "flagged_as_anomaly", "deleted_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["inbound_id", 1], ["quantity_kg", 5.0], ["declared_kg", nil], ["flagged_as_anomaly", 0], ["deleted_at", nil], ["created_at", "2026-10-15 22:25:44.588086"], ["updated_at", "2026-10-15 22:25:44.588086"]]
+  [1m[36mInboundsMaterial Load (0.0ms)[0m  [1m[34mSELECT "inbounds_materials".* FROM "inbounds_materials" WHERE "inbounds_materials"."inbound_id" = ?[0m  [["inbound_id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 1], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.1ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 10.0], ["recorded_at", "2026-10-15 22:25:44.586001"], ["source_type", "InboundsMaterial"], ["source_id", 1], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:25:44.589654"], ["updated_at", "2026-10-15 22:25:44.589654"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 1], ["quantity_kg", 0.0], ["created_at", "2026-10-15 22:25:44.590448"], ["updated_at", "2026-10-15 22:25:44.590448"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 10.0], ["updated_at", "2026-10-15 22:25:44.590869"], ["id", 1]]
+  [1m[36mMaterialMovement Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_movements" WHERE "material_movements"."source_type" = ? AND "material_movements"."source_id" = ? LIMIT ?[0m  [["source_type", "InboundsMaterial"], ["source_id", 2], ["LIMIT", 1]]
+  [1m[36mMaterialMovement Create (0.1ms)[0m  [1m[32mINSERT INTO "material_movements" ("material_id", "quantity_kg", "recorded_at", "source_type", "source_id", "note", "staff_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 5.0], ["recorded_at", "2026-10-15 22:25:44.586001"], ["source_type", "InboundsMaterial"], ["source_id", 2], ["note", nil], ["staff_id", 1], ["created_at", "2026-10-15 22:25:44.591511"], ["updated_at", "2026-10-15 22:25:44.591511"]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Create (0.1ms)[0m  [1m[32mINSERT INTO "current_materials" ("material_id", "quantity_kg", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["material_id", 2], ["quantity_kg", 0.0], ["created_at", "2026-10-15 22:25:44.592125"], ["updated_at", "2026-10-15 22:25:44.592125"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_2[0m
+  [1m[36mCurrentMaterial Update (0.0ms)[0m  [1m[33mUPDATE "current_materials" SET "quantity_kg" = ?, "updated_at" = ? WHERE "current_materials"."id" = ?[0m  [["quantity_kg", 5.0], ["updated_at", "2026-10-15 22:25:44.592454"], ["id", 2]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMaterialMovement Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "material_movements"[0m
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 1], ["LIMIT", 1]]
+  [1m[36mCurrentMaterial Load (0.0ms)[0m  [1m[34mSELECT "current_materials".* FROM "current_materials" WHERE "current_materials"."material_id" = ? LIMIT ?[0m  [["material_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------
+MaterialsControllerTest: test_should_get_show
+---------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+MaterialsControllerTest: test_should_get_index
+----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+MaterialsControllerTest: test_should_get_new
+--------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------
+MaterialsControllerTest: test_should_get_edit
+---------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
