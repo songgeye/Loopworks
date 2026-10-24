@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   devise_for :staffs, path: '', path_names: {
     sign_in: 'login',
     sign_out: 'logout'
+  }, controllers: {
+    sessions: 'sessions'
   }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

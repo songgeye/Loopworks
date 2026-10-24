@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_10_04_134549) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_24_082151) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "adjustment_materials", force: :cascade do |t|
     t.integer "material_id", null: false
     t.decimal "quantity_kg", precision: 10, scale: 2, null: false
@@ -75,6 +78,14 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_04_134549) do
     t.index ["deleted_at"], name: "index_inbounds_materials_on_deleted_at"
     t.index ["inbound_id"], name: "index_inbounds_materials_on_inbound_id"
     t.index ["material_id"], name: "index_inbounds_materials_on_material_id"
+  end
+
+  create_table "jwt_denylists", force: :cascade do |t|
+    t.string "jti", null: false
+    t.datetime "exp", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jti"], name: "index_jwt_denylists_on_jti", unique: true
   end
 
   create_table "material_movements", force: :cascade do |t|
