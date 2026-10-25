@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class CurrentMaterialsController < ApplicationController
-  skip_before_action :authenticate_staff! # TODO: 認証ブランチで削除
 
   def index
     materials = Material.includes(:current_material).order(:display_order)

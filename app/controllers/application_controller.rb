@@ -9,4 +9,9 @@ class ApplicationController < ActionController::API
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
   end
+
+  def require_admin
+    return if current_staff&.admin?
+    render json: { errors: ["権限がありません"] }, status: :forbidden
+  end
 end

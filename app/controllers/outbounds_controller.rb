@@ -2,7 +2,7 @@
 
 class OutboundsController < ApplicationController
 
-  skip_before_action :authenticate_staff!
+  before_action :require_admin
 
   def create
     outbound = CreateOutbound.call(outbound_params)
