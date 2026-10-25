@@ -47,12 +47,5 @@ class MaterialsController < ApplicationController
     render json: { errors: ["品目が見つかりません"] }, status: :not_found
   end
 
-  def require_admin
-    return if current_staff&.admin?
-    render json: { errors: ["権限がありません"] }, status: :forbidden
-  end
 
-  def material_params
-    params.require(:material).permit(:name, :display_order)
-  end
 end

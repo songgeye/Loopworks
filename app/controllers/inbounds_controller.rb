@@ -2,8 +2,6 @@
 
 class InboundsController < ApplicationController
 
-  skip_before_action :authenticate_staff!
-
   def create
     inbound = CreateInbound.call(inbound_params)
     render json: { id: inbound.id }, status: :created
