@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_10_24_082151) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_26_154734) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,8 +98,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_24_082151) do
     t.integer "staff_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "reverses_id"
     t.index ["material_id"], name: "index_material_movements_on_material_id"
     t.index ["recorded_at"], name: "index_material_movements_on_recorded_at"
+    t.index ["reverses_id"], name: "index_material_movements_on_reverses_id", unique: true
     t.index ["source_type", "source_id"], name: "index_material_movements_on_source"
     t.index ["staff_id"], name: "index_material_movements_on_staff_id"
   end
@@ -163,6 +165,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_24_082151) do
   add_foreign_key "inbounds", "staffs"
   add_foreign_key "inbounds_materials", "inbounds"
   add_foreign_key "inbounds_materials", "materials"
+  add_foreign_key "material_movements", "material_movements", column: "reverses_id"
   add_foreign_key "material_movements", "materials"
   add_foreign_key "material_movements", "staffs"
   add_foreign_key "outbounds", "counterparties"
