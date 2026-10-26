@@ -6,6 +6,8 @@ class OutboundsController < ApplicationController
 
   def create
     outbound = CreateOutbound.call(outbound_params)
+    material_ids = outbound.outbounds_materials.map(&:material_id)
+    warnings = CheckStockShortage.call(material_ids)
     render json: { id: outbound.id }, status: :created
   rescue ActiveRecord::RecordInvalid => e
     render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
