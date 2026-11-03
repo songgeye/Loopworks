@@ -135,10 +135,9 @@ export default function NewInboundPage() {
   }
 
   return (
-    // [Tailwind] [color-scheme:dark] = プルダウンや数値入力の部品を、ブラウザの暗い表示にする
-    <div className="mx-auto max-w-3xl space-y-4 [color-scheme:dark]">
+    <div className="mx-auto max-w-3xl space-y-4">
       <header className={`${card} px-6 py-5`}>
-        <p className="text-sm font-semibold text-accent">入庫管理</p>
+        <p className="text-sm font-semibold text-accent-text">入庫管理</p>
         <h1 className="text-3xl font-bold">入庫の登録</h1>
       </header>
 
@@ -188,7 +187,7 @@ export default function NewInboundPage() {
             </button>
           </div>
 
-          <div className="mt-2 divide-y divide-line">
+          <div className="mt-2 divide-y divide-card-line">
             {rows.map((row, index) => (
               <div key={row.key} className="grid gap-3 py-4 md:grid-cols-[1.6fr_1fr_1fr_auto] md:items-end">
                 <label className={labelText}>
@@ -250,8 +249,8 @@ export default function NewInboundPage() {
         </section>
 
         <div className={`${card} px-6 py-4 text-lg text-foreground/60`}>
-        品目 <span className="text-2xl font-bold text-foreground">{rows.length}</span> 件 ／ 合計{" "}
-          <span className="text-2xl font-bold text-accent">
+          品目 <span className="text-2xl font-bold text-foreground">{rows.length}</span> 件 ／ 合計{" "}
+          <span className="text-2xl font-bold text-accent-text">
             {totalKg.toLocaleString("ja-JP", { maximumFractionDigits: 2 })}
           </span>{" "}
           kg
@@ -263,7 +262,7 @@ export default function NewInboundPage() {
           </p>
         )}
         {message && (
-          <p role="status" className="rounded-2xl border border-accent/40 bg-panel px-4 py-3 text-lg text-accent">
+          <p role="status" className="rounded-2xl border border-accent/40 bg-card px-4 py-3 text-lg text-accent-text">
             {message}
           </p>
         )}

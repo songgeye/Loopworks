@@ -9,9 +9,9 @@
   --card-line: #e5e3da;
   --sidebar: #f4f3ee;
   --sidebar-line: #e5e3da;
-  --accent: #c15f3c;
-  --accent-ink: #ffffff;
-  --accent-text: #b4532f;
+  --accent: #86efac;
+  --accent-ink: #052e16;
+  --accent-text: #15803d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,9 +23,9 @@
     --card-line: #43413d;
     --sidebar: #1f1e1d;
     --sidebar-line: #3a3936;
-    --accent: #d97757;
-    --accent-ink: #1f1e1d;
-    --accent-text: #e8967a;
+    --accent: #86efac;
+    --accent-ink: #052e16;
+    --accent-text: #86efac;
   }
 }
 
