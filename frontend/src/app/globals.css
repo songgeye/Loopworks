@@ -1,22 +1,48 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light dark;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #3d3929;
+  --card: #ffffff;
+  --card-field: #f5f4ee;
+  --card-line: #e5e3da;
+  --sidebar: #f4f3ee;
+  --sidebar-line: #e5e3da;
+  --accent: #c15f3c;
+  --accent-ink: #ffffff;
+  --accent-text: #b4532f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #262624;
+    --foreground: #eeeeec;
+    --card: #30302e;
+    --card-field: #262624;
+    --card-line: #43413d;
+    --sidebar: #1f1e1d;
+    --sidebar-line: #3a3936;
+    --accent: #d97757;
+    --accent-ink: #1f1e1d;
+    --accent-text: #e8967a;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-app-bg: var(--background);
+  --color-card: var(--card);
+  --color-card-field: var(--card-field);
+  --color-card-line: var(--card-line);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-line: var(--sidebar-line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-text: var(--accent-text);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
