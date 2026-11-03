@@ -56,7 +56,7 @@ export default function Sidebar() {
               className={`${base} ${
                 active
                   ? "bg-accent font-bold text-accent-ink shadow-[0_0_24px_rgba(134,239,172,0.25)]"
-                  : "text-foreground/70 hover:bg-white/5"
+                  : "text-foreground/70 hover:bg-foreground/5"
               }`}
             >
               <Icon size={22} />
@@ -69,7 +69,7 @@ export default function Sidebar() {
       <button
         type="button"
         onClick={handleLogout}
-        className="mt-4 flex items-center gap-3 rounded-2xl px-4 py-3 text-lg text-foreground/60 hover:bg-white/5 lg:mt-auto"
+        className="mt-4 flex items-center gap-3 rounded-2xl px-4 py-3 text-lg text-foreground/60 hover:bg-foreground/5 lg:mt-auto"
       >
         <LogOut size={22} />
         ログアウト
