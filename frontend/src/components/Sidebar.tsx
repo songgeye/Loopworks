@@ -1,21 +1,32 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { House, Infinity as InfinityIcon, LogOut, PackagePlus, Warehouse } from "lucide-react";
+import { House, Infinity as InfinityIcon, LogOut, PackageMinus, PackagePlus, Warehouse } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { logout } from "@/lib/auth";
+import { getUser, logout } from "@/lib/auth";
 
-type NavItem = { href: string; label: string; icon: LucideIcon; ready: boolean };
+type NavItem = { href: string; label: string; icon: LucideIcon; ready: boolean; adminOnly?: boolean };
 const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "ホーム", icon: House, ready: true },
   { href: "/inbounds/new", label: "入庫の登録", icon: PackagePlus, ready: true },
+  { href: "/outbounds/new", label: "出庫の登録", icon: PackageMinus, ready: true, adminOnly: true },
   { href: "/stock", label: "在庫", icon: Warehouse, ready: false },
 ];
+
+function useRole() {
+  return useSyncExternalStore(
+    () => () => {},
+    () => getUser()?.role ?? null,
+    () => null,
+  );
+}
 
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const role = useRole();
 
   async function handleLogout() {
     try {
@@ -24,6 +35,8 @@ export default function Sidebar() {
       router.push("/login");
     }
   }
+
+  const items = NAV_ITEMS.filter((item) => !item.adminOnly || role === "admin");
 
   return (
     <aside className="flex flex-col border-b border-sidebar-line bg-sidebar p-4 text-foreground lg:w-64 lg:shrink-0 lg:border-b-0 lg:border-r lg:p-6">
@@ -35,7 +48,7 @@ export default function Sidebar() {
       </div>
 
       <nav className="mt-4 flex gap-2 overflow-x-auto lg:mt-10 lg:flex-col">
-        {NAV_ITEMS.map((item) => {
+        {items.map((item) => {
           const Icon = item.icon;
           const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
           const base = "flex items-center gap-3 whitespace-nowrap rounded-2xl px-4 py-3 text-lg";
