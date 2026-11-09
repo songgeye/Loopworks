@@ -3,7 +3,16 @@
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { House, Infinity as InfinityIcon, LogOut, PackageMinus, PackagePlus, Warehouse } from "lucide-react";
+import {
+  ClipboardList,
+  House,
+  Infinity as InfinityIcon,
+  LogOut,
+  PackageMinus,
+  PackagePlus,
+  Truck,
+  Warehouse,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { getUser, logout } from "@/lib/auth";
 
@@ -11,7 +20,9 @@ type NavItem = { href: string; label: string; icon: LucideIcon; ready: boolean; 
 const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "ホーム", icon: House, ready: true },
   { href: "/inbounds/new", label: "入庫の登録", icon: PackagePlus, ready: true },
+  { href: "/inbounds", label: "入庫の一覧", icon: ClipboardList, ready: true },
   { href: "/outbounds/new", label: "出庫の登録", icon: PackageMinus, ready: true, adminOnly: true },
+  { href: "/outbounds", label: "出庫の一覧", icon: Truck, ready: true, adminOnly: true },
   { href: "/stock", label: "在庫", icon: Warehouse, ready: false },
 ];
 
@@ -50,7 +61,7 @@ export default function Sidebar() {
       <nav className="mt-4 flex gap-2 overflow-x-auto lg:mt-10 lg:flex-col">
         {items.map((item) => {
           const Icon = item.icon;
-          const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+          const active = pathname === item.href;
           const base = "flex items-center gap-3 whitespace-nowrap rounded-2xl px-4 py-3 text-lg";
 
           if (!item.ready) {
