@@ -60,16 +60,21 @@ class InboundsController < ApplicationController
   end
 
   def inbound_json(inbound)
-    item = inbound.inbounds_materials.map do |inbound|
-      { id: inbound.id, material_id: inbound.material_id, material_name: inbound.material.name,
-       quantity: inbound.quantity.to_f, declared_kg: inbound.declared_kg&.to_f }
+    items = inbound.inbounds_materials.map do |inbounds_material|
+      {
+        id: inbounds_material.id,
+        material_id: inbounds_material.material_id,
+        material_name: inbounds_material.material.name,
+        quantity_kg: inbounds_material.quantity_kg.to_f,
+        declared_kg: inbounds_material.declared_kg&.to_f
+      }
     end
     {
       id: inbound.id,
       recorded_at: inbound.recorded_at,
       slip_no: inbound.slip_no,
-      counterparty_pic_name: inbound.counterparty_id,
-      counterperty: { id: inbound.counterparty_id, name: inbound.counterparty.name },
+      counterparty_pic_name: inbound.counterparty_pic_name,
+      counterparty: { id: inbound.counterparty_id, name: inbound.counterparty.name },
       staff: { id: inbound.staff_id, name: inbound.staff.name },
       items: items,
       total_kg: items.sum { |item| item[:quantity_kg] },
