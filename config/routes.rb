@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   resources :inbounds, only: [:index, :create, :destroy]
   resources :outbounds, only: [:index, :create, :destroy]
+  resources :adjustment_materials, only: [:create]
   resources :current_materials, only: [:index]
   resources :counterparties, only: [:index, :create]
   resources :staffs, only: [:index]
