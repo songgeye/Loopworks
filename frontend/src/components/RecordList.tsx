@@ -146,7 +146,7 @@ export default function RecordList({ basePath, eyebrow, title }: Props) {
 
   if (needLogin) {
     return (
-      <div className={`${card} mx-auto max-w-4xl space-y-4 p-6`}>
+      <div className={`${card} space-y-4 p-6`}>
         <p className="text-xl">ログインが必要です。</p>
         <Link href="/login" className={`${primaryButton} inline-block`}>
           ログインへ
@@ -158,7 +158,7 @@ export default function RecordList({ basePath, eyebrow, title }: Props) {
   const rows = (data?.[listKey] as RecordRow[] | undefined) ?? [];
 
   return (
-    <div className="mx-auto max-w-4xl space-y-4">
+    <div className="space-y-4">
       <header className={`${card} flex items-center justify-between gap-4 px-6 py-5`}>
         <div>
           <p className="text-sm font-semibold text-accent-text">{eyebrow}</p>
