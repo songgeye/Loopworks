@@ -1,0 +1,1 @@
+export const formatKg = (n: number) => n.toLocaleString("ja-JP", { maximumFractionDigits: 2 });
