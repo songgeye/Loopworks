@@ -23,7 +23,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/inbounds", label: "入庫の一覧", icon: ClipboardList, ready: true },
   { href: "/outbounds/new", label: "出庫の登録", icon: PackageMinus, ready: true, adminOnly: true },
   { href: "/outbounds", label: "出庫の一覧", icon: Truck, ready: true, adminOnly: true },
-  { href: "/stock", label: "在庫", icon: Warehouse, ready: false },
+  { href: "/stock", label: "在庫", icon: Warehouse, ready: true },
 ];
 
 function useRole() {

@@ -126,12 +126,12 @@ export default function NewOutboundPage() {
   }
 
   if (loadingData) {
-    return <div className={`${card} mx-auto max-w-3xl p-6 text-xl`}>読み込み中...</div>;
+    return <div className={`${card} p-6 text-xl`}>読み込み中...</div>;
   }
 
   if (needLogin) {
     return (
-      <div className={`${card} mx-auto max-w-3xl space-y-4 p-6`}>
+      <div className={`${card} space-y-4 p-6`}>
         <p className="text-xl">ログインが必要です。</p>
         <Link href="/login" className={`${primaryButton} inline-block`}>
           ログインへ
@@ -141,7 +141,7 @@ export default function NewOutboundPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-4">
+    <div className="space-y-4">
       <header className={`${card} px-6 py-5`}>
         <p className="text-sm font-semibold text-accent-text">出庫管理</p>
         <h1 className="text-3xl font-bold">出庫の登録</h1>
