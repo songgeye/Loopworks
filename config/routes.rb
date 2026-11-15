@@ -27,6 +27,6 @@ Rails.application.routes.draw do
   resources :adjustment_materials, only: [:create]
   resources :current_materials, only: [:index]
   resources :counterparty_inbound_summaries, only: [:index]
-  resources :counterparties, only: [:index, :create]
+  resources :counterparties, only: [:index, :create, :show, :update, :destroy]
   resources :staffs, only: [:index]
 end
