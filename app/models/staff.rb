@@ -15,4 +15,8 @@ class Staff < ApplicationRecord
   def admin?
     role == "admin"
   end
+
+  def active_for_authentication?
+    super && deleted_at.nil?
+  end
 end
