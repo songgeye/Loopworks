@@ -44,6 +44,12 @@ export default function AdjustmentForm({ materials, onDone }: Props) {
 
   const canSubmit = materialId !== "" && staffId !== "" && Number(quantityKg) > 0 && note.trim() !== "" && !submitting;
 
+  useEffect(() => {
+    if (!message) return;
+    const timer = setTimeout(() => setMessage(null), 4000);
+    return () => clearTimeout(timer);
+  }, [message]);
+
   async function handleSubmit(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
