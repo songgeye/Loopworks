@@ -97,6 +97,12 @@ export default function RecordList({ basePath, eyebrow, title }: Props) {
     };
   }, []);
 
+  useEffect(() => {
+    if (!message) return;
+    const timer = setTimeout(() => setMessage(null), 4000);
+    return () => clearTimeout(timer);
+  }, [message]);
+
   function handleFilter(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setApplied({ from: fromInput, to: toInput });
