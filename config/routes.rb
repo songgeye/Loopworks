@@ -28,5 +28,5 @@ Rails.application.routes.draw do
   resources :current_materials, only: [:index]
   resources :counterparty_inbound_summaries, only: [:index]
   resources :counterparties, only: [:index, :create, :show, :update, :destroy]
-  resources :staffs, only: [:index]
+  resources :staffs, only: [:index, :create, :update, :destroy]
 end
