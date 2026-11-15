@@ -13,6 +13,7 @@ import {
   PackagePlus,
   Truck,
   Warehouse,
+  Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { getUser, logout } from "@/lib/auth";
@@ -26,6 +27,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/outbounds", label: "出庫の一覧", icon: Truck, ready: true, adminOnly: true },
   { href: "/stock", label: "在庫", icon: Warehouse, ready: true },
   { href: "/counterparties", label: "取引先", icon: Building2, ready: true, adminOnly: true },
+  { href: "/staffs", label: "スタッフ", icon: Users, ready: true, adminOnly: true },
 ];
 
 function useRole() {
