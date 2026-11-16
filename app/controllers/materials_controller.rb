@@ -47,5 +47,7 @@ class MaterialsController < ApplicationController
     render json: { errors: ["品目が見つかりません"] }, status: :not_found
   end
 
-
+  def material_params
+    params.require(:material).permit(:name, :display_order, :stock_target)
+  end
 end
