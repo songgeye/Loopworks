@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AdjustmentMaterialsController < ApplicationControllergit branch --show-current
+class AdjustmentMaterialsController < ApplicationController
     before_action :require_admin
   
     def create
