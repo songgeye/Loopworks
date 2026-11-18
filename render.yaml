@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: loopworks-api
+    runtime: ruby
+    plan: free
+    region: singapore
+    branch: main
+    buildCommand: ./bin/render-build.sh
+    startCommand: ./bin/rails server
+    healthCheckPath: /up
+    autoDeployTrigger: commit
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_LOG_TO_STDOUT
+        value: "true"
+      - key: BUNDLE_WITHOUT
+        value: development:test
+      - key: WEB_CONCURRENCY
+        value: "1"
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: DEVISE_JWT_SECRET_KEY
+        generateValue: true
+      - key: FRONTEND_ORIGIN
+        sync: false
