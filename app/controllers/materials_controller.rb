@@ -1,8 +1,8 @@
 class MaterialsController < ApplicationController
-  MATERIAL_JSON_FIELDS = [:id, :name, :display_order, :stock_target].freeze
-  skip_before_action :authenticate_staff!, only: [:index, :show]
-  before_action :set_material, only: [:show, :update, :destroy]
-  before_action :require_admin, only: [:create, :update, :destroy]
+  MATERIAL_JSON_FIELDS = [ :id, :name, :display_order, :stock_target ].freeze
+  skip_before_action :authenticate_staff!, only: [ :index, :show ]
+  before_action :set_material, only: [ :show, :update, :destroy ]
+  before_action :require_admin, only: [ :create, :update, :destroy ]
 
   def index
     materials = Material.order(:display_order)
@@ -44,8 +44,6 @@ class MaterialsController < ApplicationController
   def set_material
     @material = Material.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { errors: ["品目が見つかりません"] }, status: :not_found
+    render json: { errors: [ "品目が見つかりません" ] }, status: :not_found
   end
-
-
 end

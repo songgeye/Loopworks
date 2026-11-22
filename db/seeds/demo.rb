@@ -19,7 +19,7 @@ class DemoSeed
     { username: "ito", name: "伊藤 和也", role: "staff" }
   ].freeze
 
-  MATERIALS = ["鉄(ヘビー)", "鉄(軽量)", "銅(ピカ線)", "アルミ(サッシ)", "ステンレス", "真鍮"].freeze
+  MATERIALS = [ "鉄(ヘビー)", "鉄(軽量)", "銅(ピカ線)", "アルミ(サッシ)", "ステンレス", "真鍮" ].freeze
   RANGES = {
     "鉄(ヘビー)" => 300..1800, "鉄(軽量)" => 200..1200, "銅(ピカ線)" => 20..150,
     "アルミ(サッシ)" => 50..400, "ステンレス" => 40..300, "真鍮" => 10..100
@@ -27,32 +27,32 @@ class DemoSeed
 
   SUPPLIERS = [
     { name: "東和金属工業株式会社", type: :corporate, weight: 4, scale: 1.0, pics: %w[山口 小川],
-      materials: ["鉄(軽量)", "ステンレス", "真鍮"] },
+      materials: [ "鉄(軽量)", "ステンレス", "真鍮" ] },
     { name: "有限会社大洋解体", type: :corporate, weight: 5, scale: 1.2, pics: %w[岡田 森],
-      materials: ["鉄(ヘビー)", "鉄(軽量)", "アルミ(サッシ)"] },
+      materials: [ "鉄(ヘビー)", "鉄(軽量)", "アルミ(サッシ)" ] },
     { name: "株式会社栄進建設", type: :corporate, weight: 4, scale: 1.1, pics: %w[近藤],
-      materials: ["鉄(ヘビー)", "アルミ(サッシ)"] },
+      materials: [ "鉄(ヘビー)", "アルミ(サッシ)" ] },
     { name: "北斗設備工業株式会社", type: :corporate, weight: 3, scale: 1.0, pics: %w[石井 松本],
-      materials: ["銅(ピカ線)", "アルミ(サッシ)", "ステンレス"] },
+      materials: [ "銅(ピカ線)", "アルミ(サッシ)", "ステンレス" ] },
     { name: "株式会社丸三運輸", type: :corporate, weight: 2, scale: 0.8, pics: %w[藤田],
-      materials: ["鉄(ヘビー)", "鉄(軽量)"] },
+      materials: [ "鉄(ヘビー)", "鉄(軽量)" ] },
     { name: "川島電機有限会社", type: :corporate, weight: 2, scale: 0.7, pics: %w[川島],
-      materials: ["銅(ピカ線)", "ステンレス", "真鍮"] },
+      materials: [ "銅(ピカ線)", "ステンレス", "真鍮" ] },
     { name: "小林 茂", type: :individual, weight: 1, scale: 0.15, pics: [],
-      materials: ["銅(ピカ線)", "真鍮", "アルミ(サッシ)"] },
+      materials: [ "銅(ピカ線)", "真鍮", "アルミ(サッシ)" ] },
     { name: "渡辺 洋子", type: :individual, weight: 1, scale: 0.12, pics: [],
-      materials: ["真鍮", "アルミ(サッシ)"] },
+      materials: [ "真鍮", "アルミ(サッシ)" ] },
     { name: "中村 誠", type: :individual, weight: 1, scale: 0.2, pics: [],
-      materials: ["銅(ピカ線)", "鉄(軽量)"] }
+      materials: [ "銅(ピカ線)", "鉄(軽量)" ] }
   ].freeze
 
   BUYERS = [
-    { name: "日の出製鋼株式会社", type: :corporate, pics: %w[安田], handles: ["鉄(ヘビー)", "鉄(軽量)"] },
-    { name: "西日本非鉄販売株式会社", type: :corporate, pics: %w[竹内], handles: ["銅(ピカ線)", "真鍮", "ステンレス"] },
-    { name: "関東メタルリサイクル株式会社", type: :corporate, pics: %w[内田], handles: ["アルミ(サッシ)"] }
+    { name: "日の出製鋼株式会社", type: :corporate, pics: %w[安田], handles: [ "鉄(ヘビー)", "鉄(軽量)" ] },
+    { name: "西日本非鉄販売株式会社", type: :corporate, pics: %w[竹内], handles: [ "銅(ピカ線)", "真鍮", "ステンレス" ] },
+    { name: "関東メタルリサイクル株式会社", type: :corporate, pics: %w[内田], handles: [ "アルミ(サッシ)" ] }
   ].freeze
-  OUTBOUND_DAYS = [-27, -21, -15, -9, -4].freeze
-  OUTBOUND_BUYERS = [0, 1, 0, 2, 1].freeze
+  OUTBOUND_DAYS = [ -27, -21, -15, -9, -4 ].freeze
+  OUTBOUND_BUYERS = [ 0, 1, 0, 2, 1 ].freeze
 
   ADJUSTMENTS = [
     { offset: -12, material: "鉄(軽量)", direction: "decrease", kg: 38.0, note: "棚卸しで、実在庫が帳簿より少なかったため" },
@@ -114,13 +114,13 @@ class DemoSeed
   end
 
   def build_items(supplier, rng)
-    count = [rng.rand(1..3), supplier[:materials].size].min
+    count = [ rng.rand(1..3), supplier[:materials].size ].min
     supplier[:materials].shuffle(random: rng).first(count).map do |name|
-      raw = [rng.rand(RANGES.fetch(name)) * supplier[:scale], 2.0].max
+      raw = [ rng.rand(RANGES.fetch(name)) * supplier[:scale], 2.0 ].max
       actual = round_to(raw, raw >= 100 ? 5 : 0.5)
       ratio = rng.rand < 0.07 ? rng.rand(0.85..0.89) : rng.rand(0.94..1.06)
       step = actual >= 200 ? 10 : (actual >= 20 ? 5 : 1)
-      { name: name, actual: actual, declared: round_to([actual * ratio, 2.0].max, step) }
+      { name: name, actual: actual, declared: round_to([ actual * ratio, 2.0 ].max, step) }
     end
   end
 
@@ -151,12 +151,12 @@ class DemoSeed
 
   def record_inbound(e)
     date = e[:at].to_date
-    @slip[[:in, date]] += 1
+    @slip[[ :in, date ]] += 1
     CreateInbound.call(
       counterparty_id: @counterparties.fetch(e[:supplier][:name]).id,
       staff_id: e[:staff].id,
       counterparty_pic_name: e[:pic],
-      slip_no: format("IN%s-%02d", date.strftime("%m%d"), @slip[[:in, date]]),
+      slip_no: format("IN%s-%02d", date.strftime("%m%d"), @slip[[ :in, date ]]),
       inbounds_materials_attributes: e[:items].map do |i|
         { material_id: @materials.fetch(i[:name]).id, quantity_kg: i[:actual], declared_kg: i[:declared] }
       end
@@ -172,12 +172,12 @@ class DemoSeed
     return if items.empty?
 
     date = e[:at].to_date
-    @slip[[:out, date]] += 1
+    @slip[[ :out, date ]] += 1
     CreateOutbound.call(
       counterparty_id: @counterparties.fetch(e[:buyer][:name]).id,
       staff_id: e[:staff].id,
       counterparty_pic_name: e[:pic],
-      slip_no: format("OUT%s-%02d", date.strftime("%m%d"), @slip[[:out, date]]),
+      slip_no: format("OUT%s-%02d", date.strftime("%m%d"), @slip[[ :out, date ]]),
       outbounds_materials_attributes: items.map { |i| { material_id: @materials.fetch(i[:name]).id, quantity_kg: i[:kg] } }
     )
     items.each { |i| @stock[i[:name]] -= i[:kg] }
