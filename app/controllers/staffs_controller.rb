@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class StaffsController < ApplicationController
-  before_action :require_admin, only: [:create, :update, :destroy]
-  before_action :set_staff, only: [:update, :destroy]
+  before_action :require_admin, only: [ :create, :update, :destroy ]
+  before_action :set_staff, only: [ :update, :destroy ]
 
   def index
     staffs = Staff.where(deleted_at: nil).order(:id)
@@ -23,7 +23,7 @@ class StaffsController < ApplicationController
     @staff.assign_attributes(staff_params)
 
     if @staff.role_was == "admin" && !@staff.admin? && !other_active_admin_exists?(@staff)
-      return render json: { errors: ["最後の管理者の役割は変更できません"] }, status: :unprocessable_entity
+      return render json: { errors: [ "最後の管理者の役割は変更できません" ] }, status: :unprocessable_entity
     end
 
     if @staff.save
@@ -35,10 +35,10 @@ class StaffsController < ApplicationController
 
   def destroy
     if @staff == current_staff
-      return render json: { errors: ["自分自身は無効化できません"] }, status: :unprocessable_entity
+      return render json: { errors: [ "自分自身は無効化できません" ] }, status: :unprocessable_entity
     end
     if @staff.admin? && !other_active_admin_exists?(@staff)
-      return render json: { errors: ["最後の管理者は無効化できません"] }, status: :unprocessable_entity
+      return render json: { errors: [ "最後の管理者は無効化できません" ] }, status: :unprocessable_entity
     end
 
     @staff.update!(deleted_at: Time.current)
@@ -50,7 +50,7 @@ class StaffsController < ApplicationController
   def set_staff
     @staff = Staff.where(deleted_at: nil).find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { errors: ["対象が見つかりません"] }, status: :not_found
+    render json: { errors: [ "対象が見つかりません" ] }, status: :not_found
   end
 
   def staff_json(staff)

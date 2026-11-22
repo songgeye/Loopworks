@@ -2,12 +2,12 @@
 
 class CreateAdjustment
     DIRECTIONS = %w[increase decrease].freeze
-  
+
     def self.call(attributes)
       unless DIRECTIONS.include?(attributes[:direction])
         raise ArgumentError, "区分が正しくありません"
       end
-  
+
       ActiveRecord::Base.transaction do
         adjustment = AdjustmentMaterial.create!(attributes.merge(recorded_at: Time.zone.now))
         RecordMaterialMovement.call(
@@ -18,4 +18,4 @@ class CreateAdjustment
         adjustment
       end
     end
-  end
+end

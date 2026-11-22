@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "test_helper"
 class InboundsControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -8,13 +9,13 @@ class InboundsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "入荷を登録できる" do
-    assert_difference ["Inbound.count", "MaterialMovement.count"], 1 do
+    assert_difference [ "Inbound.count", "MaterialMovement.count" ], 1 do
       post inbounds_path,
            params: {
              inbound: {
                counterparty_id: @counterparty.id,
                staff_id: @staff.id,
-               inbounds_materials_attributes: [{ material_id: @material.id, quantity_kg: 10 }]
+               inbounds_materials_attributes: [ { material_id: @material.id, quantity_kg: 10 } ]
              }
            },
            as: :json
@@ -24,13 +25,13 @@ class InboundsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "存在しない取引先だと422が返り、何も保存されない" do
-    assert_no_difference ["Inbound.count", "MaterialMovement.count"] do
+    assert_no_difference [ "Inbound.count", "MaterialMovement.count" ] do
       post inbounds_path,
            params: {
              inbound: {
                counterparty_id: 999_999,
                staff_id: @staff.id,
-               inbounds_materials_attributes: [{ material_id: @material.id, quantity_kg: 10 }]
+               inbounds_materials_attributes: [ { material_id: @material.id, quantity_kg: 10 } ]
              }
            },
            as: :json
@@ -39,5 +40,4 @@ class InboundsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert_includes response.parsed_body["errors"], "Counterparty must exist"
   end
-
-  end
+end

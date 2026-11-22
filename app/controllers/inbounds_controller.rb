@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class InboundsController < ApplicationController
-
   def index
     from = parse_date(params[:from])
     to = parse_date(params[:to])
@@ -20,7 +19,7 @@ class InboundsController < ApplicationController
       total_kg: active.sum { |row| row[:total_kg] }.round(2)
     }
   rescue Date::Error
-    render json: { errors: ["日付の形式が正しくありません(例: 2026-11-06)"] }, status: :unprocessable_entity
+    render json: { errors: [ "日付の形式が正しくありません(例: 2026-11-06)" ] }, status: :unprocessable_entity
   end
 
   def create
@@ -33,7 +32,7 @@ class InboundsController < ApplicationController
   def destroy
     inbound = Inbound.find(params[:id])
     unless inbound.editable_by?(current_staff)
-      return render(json: { errors: ["権限がありません"] }, status: :forbidden)
+      return render(json: { errors: [ "権限がありません" ] }, status: :forbidden)
     end
 
     staff = Staff.find(params.require(:staff_id))
@@ -41,9 +40,9 @@ class InboundsController < ApplicationController
     warnings = CheckStockShortage.call(inbound.inbounds_materials.map(&:material_id))
     render json: { id: inbound.id, warnings: warnings }
   rescue ActiveRecord::RecordNotFound
-    render json: { errors: ["対象が見つかりません"] }, status: :not_found
+    render json: { errors: [ "対象が見つかりません" ] }, status: :not_found
   rescue ArgumentError => e
-    render json: { errors: [e.message] }, status: :unprocessable_entity
+    render json: { errors: [ e.message ] }, status: :unprocessable_entity
   end
 
   private
@@ -51,7 +50,7 @@ class InboundsController < ApplicationController
   def inbound_params
     params.require(:inbound).permit(
       :counterparty_id, :staff_id, :counterparty_pic_name, :slip_no, :billing_no,
-      inbounds_materials_attributes: [:material_id, :quantity_kg, :declared_kg]
+      inbounds_materials_attributes: [ :material_id, :quantity_kg, :declared_kg ]
     )
   end
 

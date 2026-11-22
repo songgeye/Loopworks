@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "test_helper"
 class CreateOutboundTest < ActiveSupport::TestCase
   setup do
@@ -40,12 +41,12 @@ class CreateOutboundTest < ActiveSupport::TestCase
   end
 
   test "途中で失敗したら、出荷も台帳も残らず、在庫も変わらない" do
-    assert_no_difference ["Outbound.count", "MaterialMovement.count"] do
+    assert_no_difference [ "Outbound.count", "MaterialMovement.count" ] do
       assert_raises(ActiveRecord::RecordInvalid) do
         CreateOutbound.call(
           counterparty: @counterparty,
           staff: nil,
-          outbounds_materials_attributes: [{ material_id: @iron.id, quantity_kg: 3 }]
+          outbounds_materials_attributes: [ { material_id: @iron.id, quantity_kg: 3 } ]
         )
       end
     end

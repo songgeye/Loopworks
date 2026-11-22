@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "test_helper"
 class OutboundsControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -15,7 +16,7 @@ class OutboundsControllerTest < ActionDispatch::IntegrationTest
              outbound: {
                counterparty_id: @counterparty.id,
                staff_id: @staff.id,
-               outbounds_materials_attributes: [{ material_id: @material.id, quantity_kg: 3 }]
+               outbounds_materials_attributes: [ { material_id: @material.id, quantity_kg: 3 } ]
              }
            },
            as: :json
@@ -26,13 +27,13 @@ class OutboundsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "存在しない取引先だと422が返り、何も保存されない" do
-    assert_no_difference ["Outbound.count", "MaterialMovement.count"] do
+    assert_no_difference [ "Outbound.count", "MaterialMovement.count" ] do
       post outbounds_path,
            params: {
              outbound: {
                counterparty_id: 999_999,
                staff_id: @staff.id,
-               outbounds_materials_attributes: [{ material_id: @material.id, quantity_kg: 3 }]
+               outbounds_materials_attributes: [ { material_id: @material.id, quantity_kg: 3 } ]
              }
            },
            as: :json

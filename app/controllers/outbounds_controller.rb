@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class OutboundsController < ApplicationController
-
   before_action :require_admin
 
   def index
@@ -22,7 +21,7 @@ class OutboundsController < ApplicationController
       total_kg: active.sum { |row| row[:total_kg] }.round(2)
     }
   rescue Date::Error
-    render json: { errors: ["日付の形式が正しくありません(例: 2026-11-06)"] }, status: :unprocessable_entity
+    render json: { errors: [ "日付の形式が正しくありません(例: 2026-11-06)" ] }, status: :unprocessable_entity
   end
 
   def create
@@ -40,9 +39,9 @@ class OutboundsController < ApplicationController
     CancelOutbound.call(outbound: outbound, staff: staff)
     render json: { id: outbound.id }
   rescue ActiveRecord::RecordNotFound
-    render json: { errors: ["対象が見つかりません"] }, status: :not_found
+    render json: { errors: [ "対象が見つかりません" ] }, status: :not_found
   rescue ArgumentError => e
-    render json: { errors: [e.message] }, status: :unprocessable_entity
+    render json: { errors: [ e.message ] }, status: :unprocessable_entity
   end
 
   private
@@ -50,7 +49,7 @@ class OutboundsController < ApplicationController
   def outbound_params
     params.require(:outbound).permit(
       :counterparty_id, :staff_id, :counterparty_pic_name, :slip_no, :billing_no,
-      outbounds_materials_attributes: [:material_id, :quantity_kg, :declared_kg]
+      outbounds_materials_attributes: [ :material_id, :quantity_kg, :declared_kg ]
     )
   end
 

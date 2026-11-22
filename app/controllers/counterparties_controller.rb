@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class CounterpartiesController < ApplicationController
-
-  before_action :require_admin, only: [:create, :show, :update, :destroy]
-  before_action :set_counterparty, only: [:show, :update, :destroy]
+  before_action :require_admin, only: [ :create, :show, :update, :destroy ]
+  before_action :set_counterparty, only: [ :show, :update, :destroy ]
 
   def index
     counterparties = Counterparty.where(deleted_at: nil).order(:id)
@@ -42,7 +41,7 @@ class CounterpartiesController < ApplicationController
   def set_counterparty
     @counterparty = Counterparty.where(deleted_at: nil).find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { errors: ["対象が見つかりません"] }, status: :not_found
+    render json: { errors: [ "対象が見つかりません" ] }, status: :not_found
   end
 
   def counterparty_json(counterparty)

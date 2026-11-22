@@ -10,7 +10,7 @@ class Staff < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true
   validates :name, presence: true
-  validates :role, presence: true, inclusion: { in: %w[admin staff]}
+  validates :role, presence: true, inclusion: { in: %w[admin staff] }
 
   def admin?
     role == "admin"

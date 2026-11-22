@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class RecordMaterialMovement
-
   def self.call(source:, staff:, recorded_at:)
     ActiveRecord::Base.transaction do
       raise ArgumentError, "すでに台帳に記録済みです" if MaterialMovement.exists?(source: source)

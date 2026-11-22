@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   # ログイン・ログアウト
-  devise_for :staffs, path: '', path_names: {
-    sign_in: 'login',
-    sign_out: 'logout'
+  devise_for :staffs, path: "", path_names: {
+    sign_in: "login",
+    sign_out: "logout"
   }, controllers: {
-    sessions: 'sessions'
+    sessions: "sessions"
   }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -18,15 +18,15 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
-  root 'dashboard#index'
+  root "dashboard#index"
 
   resources :materials
 
-  resources :inbounds, only: [:index, :create, :destroy]
-  resources :outbounds, only: [:index, :create, :destroy]
-  resources :adjustment_materials, only: [:create]
-  resources :current_materials, only: [:index]
-  resources :counterparty_inbound_summaries, only: [:index]
-  resources :counterparties, only: [:index, :create, :show, :update, :destroy]
-  resources :staffs, only: [:index, :create, :update, :destroy]
+  resources :inbounds, only: [ :index, :create, :destroy ]
+  resources :outbounds, only: [ :index, :create, :destroy ]
+  resources :adjustment_materials, only: [ :create ]
+  resources :current_materials, only: [ :index ]
+  resources :counterparty_inbound_summaries, only: [ :index ]
+  resources :counterparties, only: [ :index, :create, :show, :update, :destroy ]
+  resources :staffs, only: [ :index, :create, :update, :destroy ]
 end

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class CurrentMaterialsController < ApplicationController
-
   def index
     materials = Material.includes(:current_material).order(:display_order)
     render json: materials.map { |material| stock_json(material) }
